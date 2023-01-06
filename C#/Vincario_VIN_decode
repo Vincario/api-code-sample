@@ -1,0 +1,39 @@
+// Sign up and request API key at https://vindecoder.eu/api/#request-free-trial-api-key
+// See API documentation at https://vindecoder.eu/my/api/latest/docs
+
+using System;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
+using System.IO;
+
+namespace Test
+{
+    public class Program
+    {
+        private const string apiBaseUrl = "https://api.vindecoder.eu/3.2";
+        private const string apiKey = "API_KEY";
+        private const string secretKey = "SECRET_KEY";
+
+        public static void Main(string[] args)
+        {
+            string action = "decode";
+            string vin = "WF0MXXGBWM8R43240";
+
+            WebClient webClient = new WebClient();
+            SHA1Managed sha1 = new SHA1Managed();
+
+            String controlSumRaw = string.Concat(vin, "|", action, "|", apiKey, "|", secretKey);
+            String controlSumComputed = BitConverter.ToString(sha1.ComputeHash(Encoding.UTF8.GetBytes(controlSumRaw))).Replace("-", "").Substring(0, 10);
+
+            string requestUrl = string.Format(apiBaseUrl + "/" + apiKey + "/" + controlSumComputed + "/" + action + "/" + vin + ".json");
+
+            byte[] _data = webClient.DownloadData(requestUrl);
+            Stream _mem = new MemoryStream(_data);
+            var reader = new StreamReader(_mem);
+            var result = reader.ReadToEnd();
+
+            Console.WriteLine(result);
+        }
+    }
+}
