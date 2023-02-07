@@ -47,13 +47,13 @@ function showErrors(show, errors){
 }
 
 function changeInput(){
-    console.log('change input...')
     const errors = validateInput();
     showErrors(errors.length !== 0, errors);
 
 }
-
 window.onload = (event) => {
     const vinInput = document.getElementById('vinDecodeInput');
+
+    // Init listeners
     vinInput.oninput = changeInput;
 };

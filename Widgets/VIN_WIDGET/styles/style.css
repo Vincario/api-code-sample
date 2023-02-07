@@ -10,7 +10,8 @@
 
 html, body{
     width:100% ;
-    max-width:100% ;
+    max-width:100%;
+    height:100%;
 }
 
 /* Common layout classes */
@@ -33,7 +34,6 @@ html, body{
 .reverse-row{
     display:flex;
     flex-direction: row-reverse;
-    flex-grow: 1;
     margin-right: -10px;
 }
 
@@ -42,6 +42,10 @@ html, body{
     width: 100%;
     max-width: 100%;
     padding:10px 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #vincario-decode-vin-widget .header-text{
@@ -120,6 +124,7 @@ html, body{
     color: #ED2A0C;
     padding: 0 15px;
     font-size: 16px;
+    font-weight: bold;
     line-height: 20px;
     flex-grow: 1;
 }
@@ -131,6 +136,7 @@ html, body{
 #vincario-decode-vin-widget .errors p:before {
     content: "\00BB";
     margin-right: 3px;
+    font-size: 20px;
 }
 
 /* Style MOBILE */
