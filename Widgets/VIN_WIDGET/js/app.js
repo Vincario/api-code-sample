@@ -3,7 +3,10 @@
  */
 function decodeAction() {
     const errors = validateInput();
+
     const vinInput = document.getElementById('vinDecodeInput');
+    if (vinInput.value.length !== 17)
+        return;
 
     if (errors.length === 0) {
         window.open("https://vindecoder.eu/cz/check-vin/" + vinInput.value, '_blank');
@@ -19,14 +22,12 @@ function decodeAction() {
 function validateInput() {
     const vinInput = document.getElementById('vinDecodeInput');
     const errors = Array();
-    const regExp = new RegExp("^(?!.*[IOQioq])[A-NP-Za-np-z0-9]{1,17}$");
-
-    vinInput.value = vinInput.value.trim();
+    const regExp = new RegExp("^[abcdefghjklmnprstuvwxyzABCDEFGHJKLMNPRSTUVWXYZ0123456789]{1,17}$");
 
     if (vinInput.value === "") {
-        errors.push('Input can´t be empty...');
+        errors.push('Input can´t be empty.');
     } else if (!regExp.test(vinInput.value)) {
-        errors.push('Only letters and numbers allowed. Excluded I,Q and O letters.');
+        errors.push('Only letters and numbers allowed. Excluded I,O and Q letters.');
     }
 
     return errors;
@@ -61,7 +62,24 @@ function showErrors(show, errors) {
  * Change input event
  */
 function changeInput() {
-    const errors = validateInput();
+    const vinInput = document.getElementById('vinDecodeInput');
+    const submitButton = document.getElementById('submit-vin')
+    let errors =[];
+
+    if(vinInput.value.length > 17){
+        errors.push("Reached maximum of characters (17).");
+    }
+
+    vinInput.value = vinInput.value.trim();
+    vinInput.value = vinInput.value.slice(0,17);
+
+    if(vinInput.value.length === 17) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
+
+    errors.push(...validateInput());
     showErrors(errors.length !== 0, errors);
 }
 
@@ -74,4 +92,9 @@ window.onload = (event) => {
 
     // Init listeners
     vinInput.oninput = changeInput;
+    vinInput.onkeydown = (event) => {
+        if (event.key !== 'Enter') return;
+        event.preventDefault();
+        decodeAction();
+    };
 };

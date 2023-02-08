@@ -5,7 +5,7 @@
     font-family: -apple-system, BlinkMacSystemFont, /* Todo: doriešiť font stack či necháme tento alebo zmena teda. */
     "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
     "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif; /* Todo: check if works */
+    sans-serif;
 }
 
 html, body{
@@ -79,6 +79,7 @@ html, body{
     padding:19px 20px;
     flex-grow: 1;
     display:block;
+    text-transform: uppercase;
 }
 
 #vincario-decode-vin-widget input[type="text"]::placeholder{
@@ -103,6 +104,13 @@ html, body{
     background-color: #FFFFFF;
     color: #008684;
     border-left:2px solid #008684;;
+}
+
+#vincario-decode-vin-widget button:disabled{
+    background-color: #ececec;
+    color: #696969;
+    border:none;
+    cursor:not-allowed;
 }
 
 #vincario-decode-vin-widget #logo{
