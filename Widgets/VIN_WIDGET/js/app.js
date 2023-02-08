@@ -64,20 +64,16 @@ function showErrors(show, errors) {
 function changeInput() {
     const vinInput = document.getElementById('vinDecodeInput');
     const submitButton = document.getElementById('submit-vin')
-    let errors =[];
+    let errors = [];
 
-    if(vinInput.value.length > 17){
+    if (vinInput.value.length > 17) {
         errors.push("Reached maximum of characters (17).");
     }
 
     vinInput.value = vinInput.value.trim();
-    vinInput.value = vinInput.value.slice(0,17);
+    vinInput.value = vinInput.value.slice(0, 17);
 
-    if(vinInput.value.length === 17) {
-        submitButton.disabled = false;
-    } else {
-        submitButton.disabled = true;
-    }
+    submitButton.disabled = vinInput.value.length !== 17;
 
     errors.push(...validateInput());
     showErrors(errors.length !== 0, errors);
