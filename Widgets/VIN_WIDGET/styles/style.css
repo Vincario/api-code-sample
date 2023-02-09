@@ -121,6 +121,7 @@ html, body{
     cursor:not-allowed;
 }
 
+
 #vincario-decode-vin-widget #logo{
     width:115px;
     margin-left:10px;
@@ -182,6 +183,11 @@ html, body{
         padding: 0 10px;
     }
 
+    #vincario-decode-vin-widget .bottom-container{
+        flex-direction: column;
+        align-items: end;
+    }
+
     #vincario-decode-vin-widget #logo{
         width:85px;
     }
@@ -196,5 +202,7 @@ html, body{
         padding: 0 10px;
         font-size: 14px;
         line-height: 18px;
+        align-self: start;
     }
+
 }
