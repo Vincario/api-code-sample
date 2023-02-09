@@ -138,12 +138,18 @@ html, body{
 
 #vincario-decode-vin-widget .errors p{
     margin-bottom:5px;
+    position: relative;
+    padding-left:22px;
 }
 
 #vincario-decode-vin-widget .errors p:before {
     content: "\00BB";
     margin-right: 3px;
     font-size: 20px;
+    position: absolute;
+    top: -2px;
+    bottom: 0;
+    left: 0;
 }
 
 /* Style MOBILE */
