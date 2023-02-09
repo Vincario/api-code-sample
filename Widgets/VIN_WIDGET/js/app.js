@@ -9,7 +9,7 @@ function decodeAction() {
         return;
 
     if (errors.length === 0) {
-        window.open("https://vindecoder.eu/cz/check-vin/" + vinInput.value, '_blank');
+        window.open("https://vindecoder.eu/check-vin/" + vinInput.value, '_blank');
     } else {
         showErrors(true, errors);
     }
