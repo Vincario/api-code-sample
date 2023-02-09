@@ -86,13 +86,8 @@ function changeInput() {
  * @param event
  */
 window.onload = (event) => {
-    const vinInput = document.getElementById('vinDecodeInput');
+     const vinInput = document.getElementById('vinDecodeInput');
 
     // Init listeners
     vinInput.oninput = changeInput;
-    vinInput.onkeydown = (event) => {
-        if (event.key !== 'Enter') return;
-        event.preventDefault();
-        decodeAction();
-    };
 };
