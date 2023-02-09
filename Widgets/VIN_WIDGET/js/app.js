@@ -9,7 +9,9 @@ function decodeAction() {
         return;
 
     if (errors.length === 0) {
-        window.open("https://vindecoder.eu/check-vin/" + vinInput.value, '_blank');
+        const form = document.getElementById("vindecoder-form");
+        form.action = "https://vindecoder.eu/check-vin/" + vinInput.value;
+        form.submit();
     } else {
         showErrors(true, errors);
     }
