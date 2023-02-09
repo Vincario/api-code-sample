@@ -29,7 +29,7 @@ function validateInput() {
     if (vinInput.value === "") {
         errors.push('Input can´t be empty.');
     } else if (!regExp.test(vinInput.value)) {
-        errors.push('Only letters and numbers allowed. Excluded I,O and Q letters.');
+        errors.push('Only letters and numbers are allowed. Except for the letters I, O and Q');
     }
 
     return errors;
