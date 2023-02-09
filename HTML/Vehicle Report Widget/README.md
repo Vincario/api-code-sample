@@ -11,6 +11,9 @@ responsive, so it fits anywhere you place it.
 You simply need to upload the content of this directory to your webserver and then include `index.html`
 as a source of an `iframe`.
 
+[Download a ZIP archive](https://github.com/Vincario/api-code-sample/files/10697799/vehicle_report_widget.zip)
+with all required files.
+
 Basic usage would be:
 ```
 <iframe src="https://YOUR-SERVER/PATH/TO/WIDGET/index.html"
