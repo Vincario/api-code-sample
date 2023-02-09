@@ -1,0 +1,209 @@
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url("../fonts/rubik.woff2") format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Rubik, -apple-system, BlinkMacSystemFont, /* Todo: doriešiť font stack či necháme tento alebo zmena teda. */
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+html, body{
+    width:100% ;
+    max-width:100%;
+    height:100%;
+}
+
+/* Common layout classes */
+.row{
+    display:flex;
+}
+
+.display-none{
+    display:none;
+}
+
+.align-items-center{
+    align-items: center;
+}
+
+.align-items-start{
+    align-items: start;
+}
+
+.reverse-row{
+    display:flex;
+    flex-direction: row-reverse;
+}
+
+/* Widget classes */
+#vincario-decode-vin-widget {
+    width: 100%;
+    max-width: 100%;
+    padding:10px 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#vincario-decode-vin-widget .header-text{
+    margin-left:20px;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 28px;
+    margin-bottom: 2px;
+}
+
+#vincario-decode-vin-widget form{
+    display:flex;
+    flex-direction: column;
+    border: 2px solid #008684;
+    border-radius: 0;
+    margin-bottom: 10px;
+}
+
+#vincario-decode-vin-widget input[type="text"]{
+    outline: none !important;
+    border:none;
+    border-radius: 0;
+    color: #008684;
+    font-size: 17px;
+    font-weight: 300;
+    letter-spacing: 0;
+    line-height: 19px;
+    height:100%;
+    background-color: #FFFFFF;
+    padding:19px 20px;
+    flex-grow: 1;
+    display:block;
+    text-transform: uppercase;
+}
+
+#vincario-decode-vin-widget input[type="text"]::placeholder{
+    color:#008684;
+}
+
+#vincario-decode-vin-widget button {
+    background-color: #008684;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 22px;
+    cursor: pointer;
+    text-align: center;
+    padding: 0 20px;
+    transition: background-color 0.5s ease;
+    border: none;
+    border-left:2px solid #008684;
+}
+
+#vincario-decode-vin-widget button:hover{
+    background-color: #FFFFFF;
+    color: #008684;
+    border-left:2px solid #008684;;
+}
+
+#vincario-decode-vin-widget button:disabled{
+    background-color: #ececec;
+    color: #696969;
+    border:none;
+    cursor:not-allowed;
+}
+
+
+#vincario-decode-vin-widget #logo{
+    width:115px;
+    margin-left:10px;
+}
+
+#vincario-decode-vin-widget .side-text{
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 22px;
+    text-align: center;
+    width:115px;
+    color:#858585;
+}
+
+#vincario-decode-vin-widget .errors{
+    color: #ED2A0C;
+    padding: 0 15px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    flex-grow: 1;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+
+#vincario-decode-vin-widget .errors p{
+    margin-bottom:5px;
+    position: relative;
+    padding-left:22px;
+}
+
+#vincario-decode-vin-widget .errors p:before {
+    content: "\00BB";
+    margin-right: 3px;
+    font-size: 20px;
+    position: absolute;
+    top: -2px;
+    bottom: 0;
+    left: 0;
+}
+
+/* Style MOBILE */
+@media only screen and (max-width: 576px) {
+    #vincario-decode-vin-widget .header-text{
+        font-size: 20px;
+        line-height: 22px;
+    }
+
+    #vincario-decode-vin-widget input[type="text"]{
+        font-size: 14px;
+        line-height: 16px;
+        padding:9px 10px;
+    }
+
+    #vincario-decode-vin-widget button {
+        font-size: 13px;
+        line-height: 15px;
+        padding: 0 10px;
+    }
+
+    #vincario-decode-vin-widget .bottom-container{
+        flex-direction: column;
+        align-items: end;
+    }
+
+    #vincario-decode-vin-widget #logo{
+        width:85px;
+    }
+
+    #vincario-decode-vin-widget .side-text{
+        font-size: 12px;
+        line-height: 14px;
+        width:80px;
+    }
+
+    #vincario-decode-vin-widget .errors{
+        padding: 0 10px;
+        font-size: 14px;
+        line-height: 18px;
+        align-self: start;
+    }
+
+}
