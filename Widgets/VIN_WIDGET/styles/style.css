@@ -132,7 +132,7 @@ html, body{
     letter-spacing: 1px;
     line-height: 22px;
     text-align: center;
-    width:110px;
+    width:115px;
     color:#858585;
 }
 
@@ -189,7 +189,7 @@ html, body{
     #vincario-decode-vin-widget .side-text{
         font-size: 12px;
         line-height: 14px;
-        width:77px;
+        width:80px;
     }
 
     #vincario-decode-vin-widget .errors{
