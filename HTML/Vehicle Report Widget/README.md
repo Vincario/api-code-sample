@@ -3,9 +3,9 @@ You can insert this widget into an `iframe` on your website to provide your visi
 to decode vehicle details using the [Vincario Vindecoder](https://vindecoder.eu/). The widget is fully
 responsive, so it fits anywhere you place it.
 
-<div style="text-align: center;">
-    <iframe src="index.html" title="Vindecoder Widget" width="600" height="170" style="border:none; background-color: #FFF;"></iframe>
-</div>
+<p align="center">
+<img src="https://user-images.githubusercontent.com/3509811/217822335-a7b79a7a-4193-44f0-8c44-168dbf76928a.png" width=400 alt="Widget Screenshot">
+</p>
 
 ## Installation
 You simply need to upload the content of this directory to your webserver and then include `index.html`
