@@ -43,7 +43,6 @@ html, body{
 .reverse-row{
     display:flex;
     flex-direction: row-reverse;
-    margin-right: -10px;
 }
 
 /* Widget classes */
