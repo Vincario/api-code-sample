@@ -95,8 +95,6 @@ html, body{
 }
 
 #vincario-decode-vin-widget button {
-    border-radius: 0;
-    border:none;
     background-color: #008684;
     color: #FFFFFF;
     font-size: 18px;
@@ -106,7 +104,9 @@ html, body{
     cursor: pointer;
     text-align: center;
     padding: 0 20px;
-    transition: background-color 0.5s ease;color:  0.5 ease;
+    transition: background-color 0.5s ease;
+    border: none;
+    border-left:2px solid #008684;
 }
 
 #vincario-decode-vin-widget button:hover{
