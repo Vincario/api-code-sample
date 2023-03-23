@@ -1,0 +1,87 @@
+---
+openapi: 3.0.1
+info:
+  title: VIN Decoder
+  description: Break down vehicle identification number into vehicle specification
+  termsOfService: https://vindecoder.eu/terms-and-conditions
+  contact:
+    name: Vincario
+    url: https://vindecoder.eu/
+    email: support@vindecoder.eu
+  version: "3.2"
+externalDocs:
+  description: Vincario API Documentation
+  url: https://vindecoder.eu/my/api/latest/docs
+servers:
+- url: https://api.vindecoder.eu
+paths:
+  /3.2/decode/{VIN}.{format}:
+    get:
+      parameters:
+      - name: VIN
+        in: path
+        description: Vehicle Identification Number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 17
+          minLength: 17
+          type: string
+        example: TMBGE61Z762171194
+      - name: format
+        in: path
+        description: Response format (json or html)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: json
+      - name: X-API-Key
+        in: header
+        description: Request API key at https://vindecoder.eu/api/
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+              examples:
+                "0":
+                  value: '{"price":0,"price_currency":"CZK","balance":{"API Decode":17,"API Stolen Check":4,"API Vehicle Market Value":4},"decode":[{"label":"VIN","value":"WF05XXGC055870807"},{"label":"Vehicle ID","value":1619},{"label":"Make","value":"Ford","id":30},{"label":"Model","value":"Focus","id":17779},{"label":"Model Year","value":2005},{"label":"Product Type","value":"Car","id":4},{"label":"Body","value":"Hatchback\/Liftback\/Notchback","id":5},{"label":"Series","value":"Mk2 (2004-2011)"},{"label":"Drive","value":"Front-wheel drive","id":1},{"label":"Transmission","value":"Manual\/Standard","id":6},{"label":"Number of Gears","value":5},{"label":"Emission Standard","value":"Euro 4"},{"label":"Manufacturer","value":"Ford Werke AG"},{"label":"Manufacturer Address","value":"Koeln-Niehl, Germany"},{"label":"Plant Country","value":"Germany"},{"label":"Average CO2 Emission (g\/km)","value":152.21},{"label":"Number of Axles","value":2},{"label":"Number of Doors","value":4},{"label":"Number of Seats","value":"5"},{"label":"Steering Type","value":"Steering rack and pinion"},{"label":"Wheel Size","value":"195\/65R15*205\/50R17*205\/55R16"},{"label":"Wheel Size Array","value":["195\/65R15*205\/50R17*205\/55R16"]},{"label":"Wheelbase (mm)","value":2640},{"label":"Wheelbase Array (mm)","value":[2640]},{"label":"Height (mm)","value":1497},{"label":"Length (mm)","value":4342},{"label":"Width (mm)","value":1840},{"label":"Track Front (mm)","value":1535},{"label":"Track Rear (mm)","value":1531},{"label":"Max Speed (km\/h)","value":190},{"label":"Weight Empty (kg)","value":1249},{"label":"Max Weight (kg)","value":1730},{"label":"Max roof load (kg)","value":75},{"label":"Permitted trailer load without brakes (kg)","value":620},{"label":"ABS","value":1},{"label":"Check Digit","value":"0"},{"label":"Sequential Number","value":"870807"}]}'
+    servers:
+    - url: https://api.vindecoder.eu
+components:
+  schemas:
+    inline_response_200:
+      type: object
+      properties:
+        balance:
+          type: object
+          properties:
+            API Decode:
+              type: integer
+            API Vehicle Market Value:
+              type: integer
+            API Stolen Check:
+              type: integer
+        price:
+          type: integer
+        decode:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+              value:
+                type: string
+        price_currency:
+          type: string

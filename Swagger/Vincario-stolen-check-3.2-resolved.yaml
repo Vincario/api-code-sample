@@ -1,0 +1,91 @@
+---
+openapi: 3.0.1
+info:
+  title: Stolen check
+  description: Real-time VIN check in official national police databases of stolen vehicles.
+  termsOfService: https://vindecoder.eu/terms-and-conditions
+  contact:
+    name: Vincario
+    url: https://vindecoder.eu/
+    email: support@vindecoder.eu
+  version: "3.2"
+externalDocs:
+  description: Vincario API Documentation
+  url: https://vindecoder.eu/my/api/latest/docs
+servers:
+- url: https://api.vindecoder.eu
+paths:
+  /3.2/stolen-check/{VIN}.{format}:
+    get:
+      parameters:
+      - name: VIN
+        in: path
+        description: Vehicle Identification Number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 17
+          minLength: 17
+          type: string
+        example: TMBGE61Z762171194
+      - name: format
+        in: path
+        description: Response format (json or html)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: json
+      - name: X-API-Key
+        in: header
+        description: Request API key at https://vindecoder.eu/api/
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Response example
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+              examples:
+                "0":
+                  value: '{"vin":"TMBGE61Z762171194","price":0,"price_currency":"CZK","balance":{"API Decode":18,"API Stolen Check":4,"API Vehicle Market Value":4},"stolen":[{"code":"cz","status":"stolen"},{"code":"hu","status":"not-stolen"},{"code":"ro","status":"not-stolen"},{"code":"si","status":"not-stolen"},{"code":"vincario","status":"not-stolen"}]}'
+      servers:
+      - url: https://api.vindecoder.eu
+    servers:
+    - url: https://api.vindecoder.eu
+components:
+  schemas:
+    inline_response_200:
+      type: object
+      properties:
+        stolen:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: string
+        balance:
+          type: object
+          properties:
+            API Decode:
+              type: integer
+            API Vehicle Market Value:
+              type: integer
+            API Stolen Check:
+              type: integer
+        price:
+          type: integer
+        vin:
+          type: string
+        price_currency:
+          type: string

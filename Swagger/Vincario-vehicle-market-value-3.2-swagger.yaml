@@ -1,0 +1,191 @@
+openapi: 3.0.1
+info:
+  title: Vehicle Market Value
+  description: Get insight into vehicle market data to understand the real vehicle valuation.
+  version: '3.2'
+  termsOfService: https://vindecoder.eu/terms-and-conditions
+  contact:
+    name: Vincario
+    email: support@vindecoder.eu
+    url: https://vindecoder.eu/
+servers:
+  - url: https://api.vindecoder.eu
+paths:
+  /3.2/vehicle-market-value/{VIN}.{format}:
+    get:
+      parameters:
+        - in: path
+          name: VIN
+          required: true
+          schema:
+            type: string
+            minLength: 17
+            maxLength: 17
+          description: Vehicle Identification Number
+          example: WF05XXGC055870807
+        - in: path
+          name: format
+          required: true
+          schema:
+            type: string
+            default: json
+          description: Response format (json or html)
+        - name: X-API-Key
+          in: header
+          schema:
+            type: string
+          description: Request API key at https://vindecoder.eu/api/
+      responses:
+        '200':
+          description: Response example
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stolen:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        status:
+                          type: string
+                  balance:
+                    type: object
+                    properties:
+                      API Decode:
+                        type: integer
+                      API Vehicle Market Value:
+                        type: integer
+                      API Stolen Check:
+                        type: integer
+                  price:
+                    type: integer
+                  vin:
+                    type: string
+                  price_currency:
+                    type: string
+              examples:
+                '0':
+                  value: >-
+                          {
+                            "vin": "WF05XXGC055870807",
+                            "price": 0,
+                            "price_currency": "CZK",
+                            "balance": {
+                                "API Decode": 17,
+                                "API Stolen Check": 4,
+                                "API Vehicle Market Value": 4
+                            },
+                            "vehicle": {
+                                "vehicle_id": 1619,
+                                "make": "Ford",
+                                "make_id": 30,
+                                "model": "Focus",
+                                "model_id": 17779,
+                                "model_year": 2005,
+                                "transmission": "Manual/Standard",
+                                "transmission_id": 6
+                            },
+                            "period": {
+                                "from": "2022-03-20",
+                                "to": "2023-03-20"
+                            },
+                            "market_price": {
+                                "price_count": 499,
+                                "price_currency": "EUR",
+                                "price_below": 1300,
+                                "price_mean": 2200,
+                                "price_avg": 2258,
+                                "price_above": 3200,
+                                "price_stdev": 864
+                            },
+                            "market_odometer": {
+                                "odometer_count": 499,
+                                "odometer_unit": "km",
+                                "odometer_below": 146100,
+                                "odometer_mean": 184000,
+                                "odometer_avg": 183882,
+                                "odometer_above": 220000,
+                                "odometer_stdev": 62967
+                            },
+                            "records": [
+                                {
+                                    "market": "DE",
+                                    "price": 500,
+                                    "price_currency": "EUR",
+                                    "odometer": 234000,
+                                    "odometer_unit": "km"
+                                },
+                                {
+                                    "market": "DE",
+                                    "price": 600,
+                                    "price_currency": "EUR",
+                                    "odometer": 148000,
+                                    "odometer_unit": "km"
+                                },
+                                {
+                                    "market": "DE",
+                                    "price": 600,
+                                    "price_currency": "EUR",
+                                    "odometer": 196000,
+                                    "odometer_unit": "km"
+                                },
+                                {
+                                    "market": "DE",
+                                    "price": 600,
+                                    "price_currency": "EUR",
+                                    "odometer": 205000,
+                                    "odometer_unit": "km"
+                                },
+                                {
+                                    "market": "DE",
+                                    "price": 700,
+                                    "price_currency": "EUR",
+                                    "odometer": 205000,
+                                    "odometer_unit": "km"
+                                },
+                                {
+                                    "market": "DE",
+                                    "price": 750,
+                                    "price_currency": "EUR",
+                                    "odometer": 210000,
+                                    "odometer_unit": "km"
+                                },
+                                {
+                                    "market": "DE",
+                                    "price": 750,
+                                    "price_currency": "EUR",
+                                    "odometer": 294235,
+                                    "odometer_unit": "km"
+                                },
+                                {
+                                    "market": "DE",
+                                    "price": 790,
+                                    "price_currency": "EUR",
+                                    "odometer": 241392,
+                                    "odometer_unit": "km"
+                                },
+                                {
+                                    "market": "DE",
+                                    "price": 799,
+                                    "price_currency": "EUR",
+                                    "odometer": 274000,
+                                    "odometer_unit": "km"
+                                },
+                                {
+                                    "market": "DE",
+                                    "price": 800,
+                                    "price_currency": "EUR",
+                                    "odometer": 135000,
+                                    "odometer_unit": "km"
+                                }
+                            ]
+                          }
+    servers:
+      - url: https://api.vindecoder.eu
+externalDocs:
+  description: Vincario API Documentation
+  url: https://vindecoder.eu/my/api/latest/docs
