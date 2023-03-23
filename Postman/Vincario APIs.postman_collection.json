@@ -1,0 +1,254 @@
+{
+	"info": {
+		"_postman_id": "dbe248dd-945e-4c86-b034-754208f3e576",
+		"name": "Vincario APIs",
+		"description": "Vincario API services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26452449"
+	},
+	"item": [
+		{
+			"name": "3.2",
+			"item": [
+				{
+					"name": "vehicle-market-value",
+					"item": [
+						{
+							"name": "{VIN}.{format}",
+							"item": [
+								{
+									"name": "Vehicle Market Value",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Request API key at https://vindecoder.eu/api/",
+												"key": "X-API-Key",
+												"value": ""
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/3.2/vehicle-market-value/{{VIN}}.{{format}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"3.2",
+												"vehicle-market-value",
+												"{{VIN}}.{{format}}"
+											]
+										},
+										"description": "Vehicle Market Value"
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "stolen-check",
+					"item": [
+						{
+							"name": "{VIN}.{format}",
+							"item": [
+								{
+									"name": "Stolen Check",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Request API key at https://vindecoder.eu/api/",
+												"key": "X-API-Key",
+												"value": ""
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "https://api.vindecoder.eu/3.2/stolen-check/{{VIN}}.{{format}}",
+											"protocol": "https",
+											"host": [
+												"api",
+												"vindecoder",
+												"eu"
+											],
+											"path": [
+												"3.2",
+												"stolen-check",
+												"{{VIN}}.{{format}}"
+											]
+										},
+										"description": "Stolen Check"
+									},
+									"response": [
+										{
+											"name": "Response example",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"description": "Request API key at https://vindecoder.eu/api/",
+														"key": "X-API-Key",
+														"value": "<string>"
+													}
+												],
+												"url": {
+													"raw": "https://api.vindecoder.eu/3.2/stolen-check/{{VIN}}.{{format}}",
+													"protocol": "https",
+													"host": [
+														"api",
+														"vindecoder",
+														"eu"
+													],
+													"path": [
+														"3.2",
+														"stolen-check",
+														"{{VIN}}.{{format}}"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"stolen\": [\n    {\n      \"code\": \"<string>\",\n      \"status\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"status\": \"<string>\"\n    }\n  ],\n  \"balance\": {\n    \"API Decode\": \"<integer>\",\n    \"API Vehicle Market Value\": \"<integer>\",\n    \"API Stolen Check\": \"<integer>\"\n  },\n  \"price\": \"<integer>\",\n  \"vin\": \"<string>\",\n  \"price_currency\": \"<string>\"\n}"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "decode",
+					"item": [
+						{
+							"name": "{VIN}.{format}",
+							"item": [
+								{
+									"name": "VIN Decode",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Request API key at https://vindecoder.eu/api/",
+												"key": "X-API-Key",
+												"value": ""
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/3.2/decode/{{VIN}}.{{format}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"3.2",
+												"decode",
+												"{{VIN}}.{{format}}"
+											]
+										},
+										"description": "VIN Decode"
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.vindecoder.eu"
+		},
+		{
+			"key": "VIN",
+			"value": "<string>"
+		},
+		{
+			"key": "format",
+			"value": "json"
+		}
+	]
+}
