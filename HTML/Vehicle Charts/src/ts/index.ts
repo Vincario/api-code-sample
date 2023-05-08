@@ -8,8 +8,6 @@ window.onload = async () => {
         graphs: [
             'PriceHistogramChart',
             "PriceOdoChart"],
-        graphBaseWidth: 200,
-        graphBaseHeight: 200,
     };
 
     await new VincarioLib(vincode, options).init();

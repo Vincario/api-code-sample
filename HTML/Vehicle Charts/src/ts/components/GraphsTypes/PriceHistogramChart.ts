@@ -1,7 +1,8 @@
-import iVindecoderResponse from "../../interfaces/iVindecoderResponse";
+import IVindecoderApiResponse from "../../interfaces/IVindecoderApiResponse";
 import {ChartConfiguration, DefaultDataPoint, LinearScale} from "chart.js";
 import Chart from "chart.js/auto";
 import _BaseChart from "./_BaseChart";
+import {IPriceOdoChartConfig} from "../../interfaces/IPriceOdoChartConfig";
 
 interface IProcessedData {
     prices: number[];
@@ -105,7 +106,7 @@ export default class PriceHistogramChart extends _BaseChart {
         }
     }
 
-    prepareConfig(data: IProcessedData):any {
+    prepareConfig(data: IProcessedData):IPriceOdoChartConfig {
         return {
             type: 'line',
             data: {
@@ -133,7 +134,7 @@ export default class PriceHistogramChart extends _BaseChart {
                     intersect: false,
                     mode: 'index'
                 },
-                responsive: true,
+                //responsive: true,
                 scales: {
                     y: {
                         display: true,

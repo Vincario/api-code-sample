@@ -1,5 +1,5 @@
 // Import required interfaces
-import iVindecoderResponse from "../interfaces/iVindecoderResponse";
+import IVindecoderApiResponse from "../interfaces/IVindecoderApiResponse";
 
 /**
  * VindecoderApi class, responsible for fetching vehicle data using the VIN code
@@ -17,9 +17,9 @@ export default class VindecoderApi {
 
     /**
      * fetchData method retrieves vehicle data from the Vindecoder API using the provided VIN code
-     * @returns Promise<iVindecoderResponse> - A Promise that resolves to an iVindecoderResponse object
+     * @returns Promise<IVindecoderApiResponse> - A Promise that resolves to an IVindecoderApiResponse object
      */
-    public async fetchData(): Promise<iVindecoderResponse> {
+    public async fetchData(): Promise<IVindecoderApiResponse> {
         // Build the URL with the VIN code
         const url = `${this.apiUrl}${this.vincode}.json`;
 

@@ -1,9 +1,9 @@
 // Vincario.ts
 
-import iVincarioChartsOptions from "../interfaces/iVincarioChartsOptions";
+import iVincarioChartsOptions from "../interfaces/IVincarioLibConfig";
 import VindecoderApi from "./VindecoderApi";
-import {GraphTypeMap} from "../types/GraphType";
-import iVindecoderResponse from "../interfaces/iVindecoderResponse";
+import {GraphTypeMap} from "../types/ChartType";
+import IVindecoderApiResponse from "../interfaces/IVindecoderApiResponse";
 import PriceOdoChart from "./GraphsTypes/PriceOdoChart";
 import PriceHistogramChart from "./GraphsTypes/PriceHistogramChart";
 
@@ -29,7 +29,7 @@ export default class VincarioLib {
             const api = new VindecoderApi(this.vincode);
 
             // Fetch the data from the VindecoderApi
-            const data : iVindecoderResponse = await api.fetchData();
+            const data : IVindecoderApiResponse = await api.fetchData();
 
             // Draw the Vincario charts with the fetched data and provided options
             this.draw(data);
@@ -41,10 +41,9 @@ export default class VincarioLib {
 
     /**
      * Draws the specified graphs or all available graphs if none are specified.
-     * @param {iVindecoderResponse} data - The data to be used for drawing the charts.
+     * @param {IVindecoderApiResponse} data - The data to be used for drawing the charts.
      */
-    public draw(data: iVindecoderResponse): void {
-
+    private draw(data: IVindecoderApiResponse): void {
 
         const { graphs, containerElementId } = this.options;
 
@@ -67,7 +66,7 @@ export default class VincarioLib {
         // Iterate through the available graph types
         for (const graphType of graphTypes) {
             const GraphClass = graphTypeMap[graphType];
-            const graphInstance = new GraphClass(data, this.options.graphBaseWidth, this.options.graphBaseHeight);
+            const graphInstance = new GraphClass(data);
             graphInstance.draw(containerElementId);
         }
     }
