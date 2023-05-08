@@ -1,11 +1,12 @@
 import IVindecoderApiResponse from "../../interfaces/IVindecoderApiResponse";
+import {IChartConfig} from "../../interfaces/IChartConfig";
 
 /**
  * _BaseChart is an abstract class that serves as a foundation for other chart classes.
  * It provides a basic structure and enforces the implementation of the 'draw' method
  * in any derived class.
  */
-export default abstract class _BaseChart<TData, TConfig> {
+export default abstract class _BaseChart<TData> {
 
     protected _canvas: HTMLCanvasElement;
 
@@ -42,7 +43,7 @@ export default abstract class _BaseChart<TData, TConfig> {
      * @param {TData} data - The processed chart data.
      * @returns {TConfig} The configuration object for the chart.
      */
-    abstract prepareConfig(data: TData): TConfig;
+    abstract prepareConfig(data: TData): IChartConfig;
 
     /**
      * Creates a new canvas element.

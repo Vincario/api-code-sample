@@ -6,11 +6,10 @@ import {IPoint} from "../../interfaces/IPoint";
 import {IPriceOdoChartData} from "../../interfaces/IPriceOdoChartData";
 import {IChartConfig} from "../../interfaces/IChartConfig";
 
-
 /**
  * A chart that displays the relationship between vehicle price and odometer reading.
  */
-export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData, IChartConfig> {
+export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
 
     private readonly _minPriceVsOdoChartsResults: number = 5;
 

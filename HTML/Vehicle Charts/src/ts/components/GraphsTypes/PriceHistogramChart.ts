@@ -1,20 +1,18 @@
-import IVindecoderApiResponse from "../../interfaces/IVindecoderApiResponse";
 import {ChartConfiguration, DefaultDataPoint, LinearScale} from "chart.js";
 import Chart from "chart.js/auto";
 import _BaseChart from "./_BaseChart";
-import {IPriceOdoChartConfig} from "../../interfaces/IPriceOdoChartConfig";
+import {IChartConfig} from "../../interfaces/IChartConfig";
+import {IPriceOdoChartData} from "../../interfaces/IPriceOdoChartData";
+import {IPriceHistogramChartData} from "../../interfaces/IPriceHistogramChartData";
 
-interface IProcessedData {
-    prices: number[];
-    binRange: number[];
-    binLabels: number[];
-    binCounts: number[];
-    percentile15: number;
-    percentile75: number;
-}
+export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChartData> {
 
-export default class PriceHistogramChart extends _BaseChart {
-
+    /**
+     * Computes a histogram from the input data vector with optional parameters.
+     * @param vector The input data vector as an array of numbers.
+     * @param options An object with optional parameters: `copy` and `pretty`.
+     * @returns An object with the following properties: `size`, `fun`, and `tickRange`.
+     */
     histogram(vector: number[], options: { copy?: boolean; pretty?: boolean }): {
         size: number;
         fun: (d: number) => number;
@@ -77,11 +75,24 @@ export default class PriceHistogramChart extends _BaseChart {
         };
     }
 
+    /**
+     * Generates an array of numbers in the specified range with a specified step.
+     * @param start The starting value of the range.
+     * @param end The ending value of the range.
+     * @param step The step value between consecutive numbers in the range (default is 1).
+     * @returns An array of numbers in the specified range.
+     */
     range(start: number, end: number, step: number = 1): number[] {
         const len = Math.floor((end - start) / step) + 1;
         return Array(len).fill(undefined).map((_, idx) => start + (idx * step));
     }
 
+    /**
+     * Calculates the specified percentile value from an array of numbers.
+     * @param percentile The desired percentile as a decimal (e.g., 0.15 for the 15th percentile).
+     * @param values The input data as an array of numbers.
+     * @returns The value at the specified percentile.
+     */
     calculatePercentile(percentile: number, values: number[]): number {
         // Step 1: Sort the array in ascending order
         values.sort(function (a, b) {
@@ -95,6 +106,12 @@ export default class PriceHistogramChart extends _BaseChart {
         return values[index];
     }
 
+    /**
+     * Determines the segment color based on the context and the processed data.
+     * @param ctx The charting context.
+     * @param processedData The processed data.
+     * @returns A color string in the format 'rgb(r, g, b, a)'.
+     */
     getSegmentColor(ctx, processedData) {
         const x = ctx.p0.parsed.x;
         if (x < processedData.percentile15) {
@@ -106,7 +123,12 @@ export default class PriceHistogramChart extends _BaseChart {
         }
     }
 
-    prepareConfig(data: IProcessedData):IPriceOdoChartConfig {
+    /**
+     * Prepares the chart configuration based on the input data.
+     * @param data The input data.
+     * @returns An object of type `IChartConfig` containing the chart configuration.
+     */
+    prepareConfig(data):IChartConfig {
         return {
             type: 'line',
             data: {
@@ -173,7 +195,11 @@ export default class PriceHistogramChart extends _BaseChart {
         };
     }
 
-    prepareChartData(): IProcessedData {
+    /**
+     * Processes the input data and returns an object of type `IPriceHistogramChartData` containing processed data.
+     * @returns An object of type `IPriceHistogramChartData` with the following properties: `prices`, `binLabels`, `binCounts`, `percentile15`, `percentile75`, and `binRange`.
+     */
+    prepareChartData():IPriceHistogramChartData {
         const prices = this._data.records.map((graphEntry) => Math.floor(graphEntry["price"]));
 
         const priceHistogram = this.histogram(prices, {});
@@ -193,6 +219,10 @@ export default class PriceHistogramChart extends _BaseChart {
         return {prices, binLabels, binCounts, percentile15, percentile75, binRange};
     }
 
+    /**
+     * Draws the chart inside a specified container element using the prepared chart data.
+     * @param containerElementId The ID of the container element to draw the chart in.
+     */
     draw(containerElementId: string) {
 
         try {
@@ -206,34 +236,17 @@ export default class PriceHistogramChart extends _BaseChart {
                 Chart.register(LinearScale);
             }
 
-            const chartData = {
-                labels: processedData.binLabels,
-                datasets: [
-                    {
-                        fill: true,
-                        borderWidth: 3,
-                        pointRadius: 4,
-                        borderRadius: 10,
-                        data: processedData.binCounts,
-                        tension: 0.4,
-                        pointBackgroundColor: '#fff',
-                        pointBorderColor: '#333',
-                        segment: {
-                            backgroundColor: ctx => this.getSegmentColor(ctx, processedData),
-                            borderColor: '#57B1CD',
-                        },
-                    }
-                ]
-            }
+            const chartContainer = document.createElement('div');
+            const ctx = this._canvas.getContext('2d');
             const config = this.prepareConfig(processedData);
-            const chart1 = new Chart(this._canvas.getContext("2d"), config as ChartConfiguration<'line', DefaultDataPoint<'line'>, unknown>);
+            const chart = new Chart(ctx, config);
 
-            const chartCanvas = chart1.canvas;
+            // Todo: Overlay robi problem priminimalizovani aznovuzvacseni grafu (responzivita)
 
-            document.getElementById(containerElementId).append(chartCanvas);
+            // Wrap the chart and add the overlay
+            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId);
         } catch (error) {
             console.error(error);
-            // ďalšie spracovanie chyby, napr. výpis chybovej hlášky do DOM
         }
     }
 }

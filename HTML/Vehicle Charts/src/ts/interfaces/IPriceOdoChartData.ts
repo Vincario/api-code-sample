@@ -1,10 +1,13 @@
+import {ITrendLine} from "./ITrendLine";
+import {IPoint} from "./IPoint";
+
 export interface IPriceOdoChartData {
-    processedOdometerValues: any,
-    processedPriceValues: any,
-    trendLineDataPoints: any,
-    trendLineCoefficients: any,
-    minOdoValue: any,
-    maxOdoValue: any,
-    pointColors: any,
-    trendLineData: any,
+    processedOdometerValues: number[];
+    processedPriceValues: number[];
+    trendLineDataPoints: Array<[number, number]>;
+    trendLineCoefficients: ITrendLine,
+    minOdoValue: number;
+    maxOdoValue: number;
+    pointColors: string[];
+    trendLineData: IPoint[];
 }
