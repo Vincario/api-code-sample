@@ -1,7 +1,5 @@
-import iVindecoderResponse from "../../interfaces/iVindecoderResponse";
 import * as ss from 'simple-statistics';
 import Chart from "chart.js/auto";
-import {ChartConfiguration, DefaultDataPoint} from "chart.js/dist/types";
 import _BaseChart from "./_BaseChart";
 
 /**
@@ -12,110 +10,58 @@ export default class PriceOdoChart extends _BaseChart {
     private readonly _minPriceVsOdoChartsResults: number = 5;
 
     /**
-     * Creates a new instance of PriceOdoChart.
-     * @param data - An object containing VIN decoding information for the vehicle.
-     * @param width - The width of the chart canvas.
-     * @param height - The height of the chart canvas.
-     * @returns A new instance of PriceOdoChart.
-     */
-    constructor(data: iVindecoderResponse, width: number, height: number) {
-        super(data, width, height);
-    }
-
-    /**
      * Calculates the y-coordinate of a point on a linear trendline given its x-coordinate
      * @param x - The x-coordinate for which the corresponding y-coordinate should be calculated
      * @param trendline - An object containing the slope (m) and y-intercept (b) of the trendline
      * @returns The calculated y-coordinate based on the trendline
      */
-    getY(x: number, trendline: { m: number, b: number }): number {
+    getTrendlineY(x: number, trendline: { m: number, b: number }): number {
         return trendline.m * x + trendline.b;
     }
 
     /**
-     * Determines the color for a data point based on its position relative to the trendline
-     * @param x - The x-coordinate of the data point
-     * @param y - The y-coordinate of the data point
-     * @param trendline - An object containing the slope (m) and y-intercept (b) of the trendline
-     * @returns The color for the data point (red for points above the trendline, green for points below or on the trendline)
-     */
-    getPointColorTrendLine(x: number, y: number, trendline: { m: number, b: number }): string {
-        const trendY = this.getY(x, trendline);
-        const color = y > trendY ? 'rgba(255, 0, 0, 0.5)' : 'rgba(0, 128, 0, 0.5)';
-        return color;
-    }
-
-    /**
-     * Processes the graph data and returns two arrays: one containing the odometer values and one containing the price values
-     * @returns An object with two properties: odoArray (an array of odometer values) and priceArray (an array of price values)
-     */
-    processGraphData(): { priceArray: number[]; trendData: number[][]; trendLine: { m: number; b: number }; odoArray: number[] } {
-        const odoArray: number[] = [];
-        const priceArray: number[] = [];
-
-        this._data.records.forEach((graphEntry) => {
-            const yearAgo = new Date();
-            yearAgo.setFullYear(yearAgo.getFullYear() - 1);
-
-            // Todo 01: Opýtať sa -> povodne v datach bol aj datum vzniku zaznamu a odfiltrovali sa len rok stare to plati lebo v tych example datach toto nemam ?
-            //const datePart = graphEntry["gathered_at"].split(/\D/);
-            //const chartDate = new Date(datePart[0], datePart[1] - 1, datePart[2]);
-            //if (chartDate > yearAgo) {
-            odoArray.push(Math.floor((graphEntry["odometer"] / 1000)) * 1000);
-            priceArray.push(Math.floor(graphEntry["price"]));
-            //} Todo: end TODO
-        });
-
-        const trendData = odoArray.map((odoValue, index) => [odoValue, priceArray[index]]);
-        const trendLine = ss.linearRegression(trendData);
-        odoArray.sort((a, b) => a - b);
-
-        return { odoArray, priceArray, trendData, trendLine };
-    }
-
-    /**
      * Returns an array of objects containing x and y values of the trendline.
-     * @param {number[]} odoArray - An array of odometer values.
+     * @param {number[]} odometerArray  - An array of odometer values.
      * @param {{ m: number, b: number }} trendline - An object containing the slope (m) and y-intercept (b) of the trendline.
      * @returns { { x: number, y: number }[] } - An array of objects containing the x and y values of the trendline.
      */
-    getTrendlineData(odoArray: number[], trendline: { m: number, b: number }): { x: number, y: number }[] {
-        const sortedOdoArray = odoArray.sort((a, b) => a - b);
+    getTrendlineData(odometerArray: number[], trendline: { m: number, b: number }): { x: number, y: number }[] {
+        const sortedOdoArray = odometerArray.sort((a, b) => a - b);
         return [
-            { x: sortedOdoArray[0], y: trendline.m * sortedOdoArray[0] + trendline.b },
-            { x: sortedOdoArray[sortedOdoArray.length - 1], y: trendline.m * sortedOdoArray[sortedOdoArray.length - 1] + trendline.b }
+            {x: sortedOdoArray[0], y: trendline.m * sortedOdoArray[0] + trendline.b},
+            {
+                x: sortedOdoArray[sortedOdoArray.length - 1],
+                y: trendline.m * sortedOdoArray[sortedOdoArray.length - 1] + trendline.b
+            }
         ];
     }
 
     /**
      * Returns an array of colors for each data point, based on its position relative to the trendline.
-     * @param {number[]} odoArray - An array of odometer values.
-     * @param {number[]} priceArray - An array of price values.
+     * @param {number[]} odometerArray  - An array of odometer values.
+     * @param {number[]} priceArray   - An array of price values.
      * @param {{ m: number, b: number }} trendline - An object containing the slope (m) and y-intercept (b) of the trendline.
      * @returns {string[]} - An array of colors for each data point.
      */
-    getPointColors(odoArray: number[], priceArray: number[], trendline: { m: number, b: number }): string[] {
-        return odoArray.map((odoValue, index) => {
-            const priceValue = priceArray[index];
-            const trendY = this.getY(odoValue, trendline);
+    getPointColors(odometerArray: number[], priceArray: number[], trendline: { m: number, b: number }): string[] {
+        return odometerArray.map((odoValue, index) => {
+            const priceValue = priceArray  [index];
+            const trendY = this.getTrendlineY(odoValue, trendline);
             return priceValue > trendY ? 'rgba(255, 0, 0, 0.5)' : 'rgba(0, 128, 0, 0.5)';
         });
     }
 
-    draw(containerElementId: string = null) {
-
-        const processedData = this.processGraphData();
-        if (processedData.odoArray.length < this._minPriceVsOdoChartsResults || processedData.priceArray.length < this._minPriceVsOdoChartsResults) {
-            return false;
-        }
-
-        const ctx : CanvasRenderingContext2D = this._canvas.getContext("2d");
-        const minOdoValue = Math.min(...processedData.odoArray);
-        const maxOdoValue = Math.max(...processedData.odoArray);
-        const pointColors = this.getPointColors(processedData.odoArray, processedData.priceArray, processedData.trendLine);
-        const treelineData = this.getTrendlineData(processedData.odoArray, processedData.trendLine);
-
-        const config = {
+    /**
+     Generates a configuration object for the Price vs Odometer Chart.
+     @param {Object} processedData - The processed data for the chart.
+     @param {number} minOdoValue - The minimum value on the odometer axis.
+     @param {number} maxOdoValue - The maximum value on the odometer axis.
+     @param {Array<string>} pointColors - An array of colors for each point on the chart.
+     @param {Array<Object>} trendlineData - An array of data points for the trendline on the chart.
+     @returns {Object} The configuration object for the chart.
+     */
+    prepareConfig({processedData, minOdoValue, maxOdoValue, pointColors, trendlineData}): any {
+        return {
             type: 'line',
             data: {
                 labels: processedData.priceArray,
@@ -123,7 +69,7 @@ export default class PriceOdoChart extends _BaseChart {
                     {
                         backgroundColor: "rgba(0, 0, 0, 0)",
                         borderColor: "rgba(0, 0, 0, 1)",
-                        data: treelineData,
+                        data: trendlineData,
                         fill: false,
                         yAxisID: "left-y-axis",
                         pointRadius: 3,
@@ -132,7 +78,10 @@ export default class PriceOdoChart extends _BaseChart {
                     },
                     {
                         backgroundColor: "rgb(75, 192, 192)",
-                        data: processedData.odoArray.map((value, index) => ({x: value, y: processedData.priceArray[index]})),
+                        data: processedData.odometerArray.map((value, index) => ({
+                            x: value,
+                            y: processedData.priceArray  [index]
+                        })),
                         fill: false,
                         yAxisID: "left-y-axis",
                         pointRadius: 3,
@@ -151,7 +100,7 @@ export default class PriceOdoChart extends _BaseChart {
                     },
                     tooltip: {
                         callbacks: {
-                            title: (item, data) => null,
+                            title: () => null,
                             label: (context) => {
                                 const dataIndex = context.dataIndex;
                                 const dataset = context.dataset;
@@ -205,7 +154,80 @@ export default class PriceOdoChart extends _BaseChart {
                 },
             }
         };
-        const chart1 = new Chart(ctx, config);
-        document.getElementById(containerElementId).append(chart1.canvas);
     }
+
+    /**
+     Processes the graph data and returns an object containing arrays of processed odometer and price data,
+     as well as trendline data and coefficients.
+     @returns An object with four properties:
+     odometerArray (an array of processed odometer values),
+     priceArray (an array of processed price values),
+     trendData (an array of data points for the trendline),
+     trendLine (an object containing coefficients for the trendline equation).
+     */
+    prepareChartData()  {
+        const odometerArray: number[] = [];
+        const priceArray: number[] = [];
+
+        this._data.records.forEach((graphEntry) => {
+            const yearAgo = new Date();
+            yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+
+            odometerArray.push(Math.floor((graphEntry["odometer"] / 1000)) * 1000);
+            priceArray.push(Math.floor(graphEntry["price"]));
+        });
+
+        const trendData = odometerArray.map((odoValue, index) => [odoValue, priceArray  [index]]);
+        const trendLine = ss.linearRegression(trendData);
+        odometerArray.sort((a, b) => a - b);
+
+        return {odometerArray, priceArray, trendData, trendLine};
+    }
+
+    /**
+     * Draws the PriceOdoChart on a canvas element.
+     * @param {string} [containerElementId=null] - The ID of the element that the chart should be appended to.
+     * If null, the chart is appended to the document body.
+     */
+    draw(containerElementId = null) {
+        try {
+            const processedData = this.prepareChartData();
+
+            // If there is not enough data to create a chart, throw an error
+            if (
+                processedData.odometerArray.length < this._minPriceVsOdoChartsResults ||
+                processedData.priceArray.length < this._minPriceVsOdoChartsResults
+            ) {
+                throw new Error('Not enough data to create chart.');
+            }
+
+            const chartContainer = document.createElement('div');
+            chartContainer.style.position = 'relative';
+
+            const ctx = this._canvas.getContext('2d');
+            const minOdoValue = Math.min(...processedData.odometerArray);
+            const maxOdoValue = Math.max(...processedData.odometerArray);
+            const pointColors = this.getPointColors(processedData.odometerArray, processedData.priceArray, processedData.trendLine);
+            const trendlineData = this.getTrendlineData(processedData.odometerArray, processedData.trendLine);
+            const config = this.prepareConfig({processedData, minOdoValue, maxOdoValue, pointColors, trendlineData});
+            const chart = new Chart(ctx, config);
+
+            // Add image overlay to chart container
+            this.addImageOverlay(chartContainer);
+
+            // Append chart canvas to container
+            chartContainer.appendChild(chart.canvas);
+
+            // Append chart container to provided container element or body
+            const container = document.getElementById(containerElementId);
+            if (container) {
+                container.appendChild(chartContainer);
+            } else {
+                document.body.appendChild(chartContainer);
+            }
+        } catch (error) {
+            console.error(`Error creating chart: ${error.message}`);
+        }
+    }
+
 }

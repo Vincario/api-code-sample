@@ -1,13 +1,16 @@
-import VincarioCharts from "./components/VincarioCharts";
+// index.ts
+import VincarioLib from "./components/VincarioLib";
 
-window.onload = () => {
-
+window.onload = async () => {
     const vincode = "WF0AXXGCDA2000000";
-    new VincarioCharts(vincode, {
+    const options = {
         containerElementId: "vincario-charts",
-        graphs: [/*'PriceHistogramChart',*/ 'PriceOdoChart'],
-        graphBaseWidth:200,
-        graphBaseHeight:200
-    }).init();
+        graphs: [
+            'PriceHistogramChart',
+            "PriceOdoChart"],
+        graphBaseWidth: 200,
+        graphBaseHeight: 200,
+    };
 
+    await new VincarioLib(vincode, options).init();
 };

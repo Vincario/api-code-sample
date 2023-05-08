@@ -1,3 +1,6 @@
+// Import the iRecord interface
+import iRecord from "./iRecord";
+
 export default interface iVindecoderResponse {
     vin: string;
     price: number;
@@ -41,7 +44,7 @@ export default interface iVindecoderResponse {
         odometer_avg: number;
         odometer_above: number;
     };
-    records: any[];
+    records: iRecord[];
     period: {
         from: string;
         to: string;
