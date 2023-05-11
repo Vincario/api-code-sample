@@ -1,8 +1,7 @@
-import {ChartConfiguration, DefaultDataPoint, LinearScale} from "chart.js";
+import {LinearScale} from "chart.js";
 import Chart from "chart.js/auto";
 import _BaseChart from "./_BaseChart";
 import {IChartConfig} from "../../interfaces/IChartConfig";
-import {IPriceOdoChartData} from "../../interfaces/IPriceOdoChartData";
 import {IPriceHistogramChartData} from "../../interfaces/IPriceHistogramChartData";
 
 export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChartData> {

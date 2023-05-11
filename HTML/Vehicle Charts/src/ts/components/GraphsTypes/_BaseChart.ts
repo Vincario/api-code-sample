@@ -64,7 +64,7 @@ export default abstract class _BaseChart<TData> {
         image.style.position = 'absolute';
         image.style.top = '15px';
         image.style.right = '30px';
-        image.style.opacity = '0.4';
+        image.style.opacity = '0.7';
         image.style.maxWidth = '100%';
         image.style.width = '10%';
         image.style.height = 'auto';
