@@ -5,7 +5,7 @@ import cs from './cs';
 export function initI18n(lng: string) {
     const config: InitOptions = {
         lng: lng,
-        debug:true,
+        debug:false,
         resources: {
             en: {translation: en},
             cs: {translation: cs},

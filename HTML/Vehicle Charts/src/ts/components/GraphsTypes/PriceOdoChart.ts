@@ -186,7 +186,18 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
         const minOdoValue = Math.min(...processedOdometerValues);
         const maxOdoValue = Math.max(...processedOdometerValues);
 
-        const trendLineDataPoints = processedOdometerValues.map((odometer, index) => ({x: odometer, y: processedPriceValues[index]}));
+        const uniqueXValues = new Set();
+        const trendLineDataPoints = [];
+        for (let i = 0; i < processedOdometerValues.length; i++) {
+            const odometer = processedOdometerValues[i];
+            const price = processedPriceValues[i];
+
+            // Check if the x-value (odometer) is already in uniqueXValues
+            if (!uniqueXValues.has(odometer)) {
+                uniqueXValues.add(odometer);
+                trendLineDataPoints.push({ x: odometer, y: price });
+            }
+        }
         const trendLineCoefficients = ss.linearRegression(trendLineDataPoints.map(point => [point.x, point.y]));
         const trendLineData: IPoint[] = trendLineDataPoints.map(point => {
             return {

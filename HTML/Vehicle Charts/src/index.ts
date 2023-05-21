@@ -10,6 +10,8 @@ window.onload = async () => {
         lengthUnit: 'km',
         language: 'cs',
         graphs: [
+            'OdometerReadingChart',
+            'AverageOdometerAndPriceChart',
             'PriceHistogramChart',
             "PriceOdoChart"
         ],

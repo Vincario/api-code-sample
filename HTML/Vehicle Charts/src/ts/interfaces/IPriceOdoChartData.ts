@@ -1,4 +1,3 @@
-import {ITrendLine} from "./ITrendLine";
 import {IPoint} from "./IPoint";
 
 export interface IPriceOdoChartData {

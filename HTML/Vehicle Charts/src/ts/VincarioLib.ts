@@ -7,6 +7,8 @@ import PriceOdoChart from "./components/GraphsTypes/PriceOdoChart";
 import PriceHistogramChart from "./components/GraphsTypes/PriceHistogramChart";
 import IVincarioLibConfig from "./interfaces/IVincarioLibConfig";
 import {initI18n} from "../i18n/i18n";
+import AverageOdometerAndPriceChart from "./components/GraphsTypes/AverageOdometerAndPriceChart";
+import OdometerReadingChart from "./components/GraphsTypes/OdometerReadingChart";
 
 /**
  * Vincario class, which is responsible for initializing and managing the Vincario charts
@@ -47,7 +49,7 @@ export default class VincarioLib {
 
             // Fetch the data from the VindecoderApi
             const data: IVindecoderApiResponse = await api.fetchData();
-
+            console.log(data);
             // Draw the Vincario charts with the fetched data and provided options
             this.draw(data);
         } catch (error) {
@@ -73,6 +75,8 @@ export default class VincarioLib {
 
         // Create an object to map graph types to their respective classes
         const graphTypeMap: GraphTypeMap = {
+            OdometerReadingChart,
+            AverageOdometerAndPriceChart,
             PriceHistogramChart,
             PriceOdoChart,
         };
