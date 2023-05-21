@@ -16,6 +16,7 @@ export default interface IVindecoderApiResponse {
         make_id: number;
         model: string;
         model_id: number;
+        model_year:number;
         year: number;
         body: string;
         body_id: number;

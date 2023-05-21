@@ -1,5 +1,7 @@
 import IVindecoderApiResponse from "../../interfaces/IVindecoderApiResponse";
 import {IChartConfig} from "../../interfaces/IChartConfig";
+import IVincarioLibConfig from "../../interfaces/IVincarioLibConfig";
+import i18next from "i18next";
 
 /**
  * _BaseChart is an abstract class that serves as a foundation for other chart classes.
@@ -13,9 +15,10 @@ export default abstract class _BaseChart<TData> {
     /**
      * Creates a new instance of BaseChart.
      * @param _data
+     * @param _options
      * @returns A new instance of PriceOdoChart.
      */
-    constructor(protected readonly _data: IVindecoderApiResponse) {
+    constructor(protected readonly _data: IVindecoderApiResponse, protected readonly _options: IVincarioLibConfig) {
         this._canvas = _BaseChart.createCanvas();
     }
 
@@ -26,9 +29,9 @@ export default abstract class _BaseChart<TData> {
      * @param {string} containerElementId - ID of the container element to render the chart in.
      *                                      If not provided, the chart will be rendered in the
      *                                      document's body.
-     * @param grapTypesLength
+     * @param data
      */
-    abstract draw(containerElementId: string = null, grapTypesLength : number): void;
+    abstract draw(containerElementId: string = null): void;
 
     /**
      * Processes the raw data received from the IVindecoderApiResponse and
@@ -46,6 +49,8 @@ export default abstract class _BaseChart<TData> {
      */
     abstract prepareConfig(data: TData): IChartConfig;
 
+    abstract createCartHeader(chartContainer: HTMLElement): void;
+
     /**
      * Creates a new canvas element.
      * @returns {HTMLCanvasElement} The newly created canvas element.
@@ -59,18 +64,18 @@ export default abstract class _BaseChart<TData> {
      @param container - The container element to which the image overlay will be added.
      @returns void
      */
-    protected addImageOverlay(container : HTMLElement) {
+    protected addImageOverlay(container: HTMLElement) {
         const image = document.createElement('img');
-        image.src = 'src/res/logo.png';
+        image.src = 'src/assets/logo.png';
         image.style.position = 'absolute';
-        image.style.top = '15px';
+        image.style.top = '100px'; //Todo: Toto je napicu spravene keď sa prida novy prvok tak to odskoci a clovek to musi meniť dynamicky... look later
         image.style.right = '30px';
         image.style.opacity = '0.7';
         image.style.maxWidth = '100%';
         image.style.width = '10%';
         image.style.height = 'auto';
         image.style.maxHeight = '70px';
-        image.style.zIndex = '10';
+        image.style.zIndex = '99';
         image.style.pointerEvents = 'none';
 
         if (container) {
@@ -81,8 +86,44 @@ export default abstract class _BaseChart<TData> {
         }
     }
 
+    protected createTextElement(text: string) {
+        const element = document.createElement('p');
+        element.textContent = text;
+        return element;
+    };
 
-    protected wrapAndAddOverlay(chartContainer: HTMLDivElement, chartCanvas: HTMLCanvasElement, containerElementId: string | null, grapTypesLength : number): void {
+    protected createExplanatoryBox(text: string, className: string) {
+        const container = document.createElement('div');
+        container.classList.add('chart-explanatory-box-container');
+
+        const box = document.createElement('div');
+        box.classList.add('chart-explanatory-box');
+        box.classList.add(className);
+
+        const textElement = this.createTextElement(text);
+
+        container.appendChild(box);
+        container.appendChild(textElement);
+
+        return container;
+    }
+
+    protected createTrendlineSign() {
+        const container = document.createElement('div');
+        container.classList.add('trend-line-sign-container');
+
+        const sign = document.createElement('div');
+        sign.classList.add('trend-line-sign');
+
+        const text = this.createTextElement(i18next.t('TRENDLINE'));
+
+        container.appendChild(sign);
+        container.appendChild(text);
+
+        return container;
+    };
+
+    protected wrapAndAddOverlay(chartContainer: HTMLDivElement, chartCanvas: HTMLCanvasElement, containerElementId: string | null): void {
         chartContainer.style.position = 'relative';
 
 

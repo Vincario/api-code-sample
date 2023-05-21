@@ -3,6 +3,7 @@ import Chart from "chart.js/auto";
 import _BaseChart from "./_BaseChart";
 import {IChartConfig} from "../../interfaces/IChartConfig";
 import {IPriceHistogramChartData} from "../../interfaces/IPriceHistogramChartData";
+import i18next from "i18next";
 
 export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChartData> {
 
@@ -160,7 +161,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
                         display: true,
                         title: {
                             display: true,
-                            text: "Count of vehicles",
+                            text: i18next.t("COUNT_OF_VEHICLES"),
                             padding: 10,
                         },
                     },
@@ -171,7 +172,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
                         },
                         title: {
                             display: true,
-                            text: "Price (€)",
+                            text: i18next.t("PRICE") + ' (' + this._options.currency + ')',
                             padding: 10,
                         },
                         max: Math.round(data.binRange[1]) + data.binRange[2]
@@ -184,7 +185,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
                     tooltip: {
                         callbacks: {
                             title: (context) => {
-                                return "Number of vehicle listings in the price range";
+                                return i18next.t("NUMBERS_OF_VEHICLE_LISTING");
                             },
                         },
                     },
@@ -217,12 +218,32 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
         return {prices, binLabels, binCounts, percentile15, percentile75, binRange};
     }
 
+    private createCartHeader(chartContainer:HTMLElement):void{
+        // Create chart header element
+        const chartHeader = document.createElement('p');
+        chartHeader.textContent = `${i18next.t('MARKET_VALUE')}: ${this._data.vehicle.model} (${this._data.vehicle.model_year})`;
+        chartHeader.classList.add('chartHeader');
+
+        // Create chart explanatory element
+        const chartExplanatory = document.createElement('div');
+        chartExplanatory.classList.add('chart-explanatory');
+
+        // Create and append explanatory boxes
+        chartExplanatory.appendChild(this.createExplanatoryBox(i18next.t('BELLOW_AVERAGE'), 'chart-explanatory-box-green'));
+        chartExplanatory.appendChild(this.createExplanatoryBox(i18next.t('AVERAGE'), 'chart-explanatory-box-orange'));
+        chartExplanatory.appendChild(this.createExplanatoryBox(i18next.t('ABOVE_AVERAGE'), 'chart-explanatory-box-red'));
+
+        // Prepend chart explanatory and chart header to chart container
+        chartContainer.prepend(chartExplanatory);
+        chartContainer.prepend(chartHeader);
+    };
+
     /**
      * Draws the chart inside a specified container element using the prepared chart data.
      * @param containerElementId The ID of the container element to draw the chart in.
-     * @param grapTypesLength
+     * @param data
      */
-    draw(containerElementId: string, grapTypesLength : number) {
+    draw(containerElementId: string) {
 
         try {
             const processedData = this.prepareChartData();
@@ -240,10 +261,10 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
             const config = this.prepareConfig(processedData);
             const chart = new Chart(ctx, config);
 
-            // Todo: Overlay robi problem priminimalizovani aznovuzvacseni grafu (responzivita)
-
             // Wrap the chart and add the overlay
-            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId, grapTypesLength);
+            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId);
+            this.createCartHeader(chartContainer);
+
         } catch (error) {
             console.error(error);
         }

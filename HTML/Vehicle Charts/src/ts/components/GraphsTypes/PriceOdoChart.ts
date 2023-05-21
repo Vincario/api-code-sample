@@ -5,6 +5,7 @@ import {ITrendLine} from "../../interfaces/ITrendLine";
 import {IPoint} from "../../interfaces/IPoint";
 import {IPriceOdoChartData} from "../../interfaces/IPriceOdoChartData";
 import {IChartConfig} from "../../interfaces/IChartConfig";
+import i18next from "i18next";
 
 /**
  * A chart that displays the relationship between vehicle price and odometer reading.
@@ -24,23 +25,6 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
     }
 
     /**
-     * Returns an array of objects containing x and y values of the trendLine.
-     * @param {number[]} odometerArray  - An array of odometer values.
-     * @param {ITrendLine} trendLine - An object containing the slope (m) and y-intercept (b) of the trendLine.
-     * @returns {IPoint[]} - An array of objects containing the x and y values of the trendLine.
-     */
-    private getTrendLineData(odometerArray: number[], trendLine: ITrendLine): IPoint[] {
-        const sortedOdoArray = odometerArray.sort((a, b) => a - b);
-        return [
-            {x: sortedOdoArray[0], y: trendLine.m * sortedOdoArray[0] + trendLine.b},
-            {
-                x: sortedOdoArray[sortedOdoArray.length - 1],
-                y: trendLine.m * sortedOdoArray[sortedOdoArray.length - 1] + trendLine.b
-            }
-        ];
-    }
-
-    /**
      * Returns an array of colors for each data point, based on its position relative to the trendLine.
      * @param {number[]} odometerArray  - An array of odometer values.
      * @param {number[]} priceArray   - An array of price values.
@@ -51,7 +35,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
         return odometerArray.map((odoValue, index) => {
             const priceValue = priceArray  [index];
             const trendY = this.getTrendLineY(odoValue, trendLine);
-            return priceValue > trendY ? 'rgba(255, 0, 0, 0.5)' : 'rgba(0, 128, 0, 0.5)';
+            return priceValue > trendY ? 'rgba(165,42,42,.5)' : 'rgba(61,133,106,.5)';
         });
     }
 
@@ -69,13 +53,17 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
                 datasets: [
                     {
                         backgroundColor: "rgba(0, 0, 0, 0)",
-                        borderColor: "rgba(0, 0, 0, 1)",
+                        borderColor: "rgba(0, 0, 0, 0.5)",
                         data: data.trendLineData,
                         fill: false,
                         yAxisID: "left-y-axis",
-                        pointRadius: 3,
+                        pointRadius: 0,
                         pointBackgroundColor: '#fff',
-                        borderWidth: 1,
+                        borderWidth: 3,
+
+                        hoverBackgroundColor: "rgba(0, 0, 0, 0.5)",
+                        hoverBorderColor: "rgba(0, 0, 0, 0.7)",
+                        hoverBorderWidth: 5,
                     },
                     {
                         backgroundColor: "rgb(75, 192, 192)",
@@ -84,7 +72,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
                             y: data.processedPriceValues  [index]
                         })),
                         fill: false,
-                        yAxisID: "left-y-axis",
+                        yAxisID: "right-y-axis",
                         pointRadius: 3,
                         pointHoverRadius: 5,
                         showLine: false,
@@ -106,18 +94,23 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
                                 const dataset = context.dataset;
                                 const price = dataset.data[dataIndex].y;
                                 const odo = dataset.data[dataIndex].x;
-                                return `${Math.round(price).toLocaleString()} € / ${odo.toLocaleString()} KM`;
+                                return (context.datasetIndex === 0 ? i18next.t('TRENDLINE')  : ''  ) + ` ${Math.round(price).toLocaleString()} ${this._options.currency} / ${odo.toLocaleString()} ${this._options.lengthUnit}`;
                             }
                         }
                     },
                     backgroundImage: {
-                        image: 'src/res/logo.png',
+                        image: 'src/assets/logo.png',
                         x: 0,
                         y: 0,
                         width: '100%',
                         height: '100%'
                     }
                 },
+                interaction: {
+                    intersect: false,
+                    mode: 'nearest'
+                },
+
                 scales: {
                     'left-y-axis': {
                         type: 'linear',
@@ -129,7 +122,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
                         },
                         title: {
                             display: true,
-                            text: "Price (:currency)",
+                            text: i18next.t("PRICE") + ' ' + "(" + this._options.currency + ")",
                             padding: {top: 0, left: 0, right: 0, bottom: 10}
                         },
                     },
@@ -154,7 +147,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
                         max: data.maxOdoValue + (data.maxOdoValue - data.minOdoValue) * 0.1,
                         title: {
                             display: true,
-                            text: "Odometer (:unit)",
+                            text: i18next.t("ODOMETER") + ' ' + "(" + this._options.lengthUnit + ")",
                             padding: {top: 20, left: 0, right: 0, bottom: 0}
                         },
                     }
@@ -170,8 +163,6 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
      * @returns {IPriceOdoChartData} An object with the following properties:
      * - processedOdometerValues (number[]): an array of processed odometer values
      * - processedPriceValues (number[]): an array of processed price values
-     * - trendLineDataPoints (Array<[number, number]>): an array of data points for the trendLine
-     * - trendLineCoefficients (object): an object containing coefficients for the trendLine equation
      * - minOdoValue (number): the minimum odometer value
      * - maxOdoValue (number): the maximum odometer value
      * - pointColors (string[]): an array of colors for the data points
@@ -189,19 +180,22 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
             processedPriceValues.push(Math.floor(graphEntry["price"]));
         });
 
-        const trendLineDataPoints = processedOdometerValues.map((odometer, index) => ({x: odometer, y: processedPriceValues[index]}));
-        const trendLineCoefficients = ss.linearRegression(trendLineDataPoints.map(point => [point.x, point.y]));
-
         processedOdometerValues.sort((a, b) => a - b);
         processedPriceValues.sort((a, b) => a - b);
 
         const minOdoValue = Math.min(...processedOdometerValues);
         const maxOdoValue = Math.max(...processedOdometerValues);
+
+        const trendLineDataPoints = processedOdometerValues.map((odometer, index) => ({x: odometer, y: processedPriceValues[index]}));
+        const trendLineCoefficients = ss.linearRegression(trendLineDataPoints.map(point => [point.x, point.y]));
+        const trendLineData: IPoint[] = trendLineDataPoints.map(point => {
+            return {
+                x: point.x,
+                y: this.getTrendLineY(point.x, trendLineCoefficients)
+            };
+        });
+
         const pointColors = this.getPointColors(processedOdometerValues, processedPriceValues, trendLineCoefficients);
-        const trendLineData: IPoint[] = processedOdometerValues.map(odometer => ({
-            x: odometer,
-            y: this.getTrendLineY(odometer, trendLineCoefficients)
-        }));
 
         // If there is not enough data to create a chart, throw an error
         if (
@@ -212,15 +206,35 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
         }
 
         return {
+            pointColors,
             processedOdometerValues,
             processedPriceValues,
-            trendLineDataPoints,
-            trendLineCoefficients,
             minOdoValue,
             maxOdoValue,
-            pointColors,
             trendLineData,
         };
+    }
+
+    private createCartHeader(chartContainer:HTMLElement):void{
+        // Create chart header element
+        const chartHeader = document.createElement('p');
+        chartHeader.textContent = `${i18next.t('PRICE')} (€) / ${i18next.t('ODOMETER')} (km): ${this._data.vehicle.model} (${this._data.vehicle.model_year})`;
+        chartHeader.classList.add('chartHeader');
+
+        // Create chart explanatory element
+        const chartExplanatory = document.createElement('div');
+        chartExplanatory.classList.add('chart-explanatory');
+
+        // Create and append trendline sign
+        chartExplanatory.appendChild(this.createTrendlineSign());
+
+        // Create and append explanatory boxes
+        chartExplanatory.appendChild(this.createExplanatoryBox(i18next.t('BELLOW_AVERAGE'), 'chart-explanatory-box-green'));
+        chartExplanatory.appendChild(this.createExplanatoryBox(i18next.t('ABOVE_AVERAGE'), 'chart-explanatory-box-red'));
+
+        // Prepend chart explanatory and chart header to chart container
+        chartContainer.prepend(chartExplanatory);
+        chartContainer.prepend(chartHeader);
     }
 
     /**
@@ -228,7 +242,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
      * @param {string} [containerElementId=null] - The ID of the element that the chart should be appended to.
      * If null, the chart is appended to the document body.
      */
-    public draw(containerElementId = null,  grapTypesLength : number) {
+    public draw(containerElementId = null) {
         try {
             const processedData: IPriceOdoChartData = this.prepareChartData();
 
@@ -238,7 +252,9 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
             const chart = new Chart(ctx, config);
 
             // Wrap the chart and add the overlay
-            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId, grapTypesLength);
+            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId);
+            this.createCartHeader(chartContainer);
+
         } catch (error) {
             console.error(`Error creating chart: ${error.message}`);
         }

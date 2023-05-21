@@ -6,17 +6,33 @@ import IVindecoderApiResponse from "./interfaces/IVindecoderApiResponse";
 import PriceOdoChart from "./components/GraphsTypes/PriceOdoChart";
 import PriceHistogramChart from "./components/GraphsTypes/PriceHistogramChart";
 import IVincarioLibConfig from "./interfaces/IVincarioLibConfig";
+import {initI18n} from "../i18n/i18n";
 
 /**
  * Vincario class, which is responsible for initializing and managing the Vincario charts
  */
 export default class VincarioLib {
+
     /**
      * Constructor takes a VIN code (Vehicle Identification Number) and options for Vincario charts
      * @param vincode: string - The VIN code of the vehicle
      * @param options: IVincarioLibConfig - The options for configuring the Vincario charts
      */
     constructor(private vincode: string, private options: IVincarioLibConfig) {
+
+        // Import styles for lib
+        import('../styles/style.scss');
+
+        // Initialize translations
+        initI18n(options.language || 'en');
+
+        // Set default vales for some options
+        this.options = {
+            currency: 'EUR',
+            lengthUnit: 'km',
+            language: 'en',
+            ...this.options, // Overwrite defaults if values are provided
+        };
     }
 
     /**
@@ -24,6 +40,7 @@ export default class VincarioLib {
      * @returns Promise<void> - A Promise that resolves when the initialization is complete
      */
     public async init(): Promise<void> {
+
         try {
             // Create a new instance of the VindecoderApi class with the provided VIN code
             const api = new VindecoderApi(this.vincode);
@@ -66,36 +83,10 @@ export default class VincarioLib {
         // Iterate through the available graph types
         for (const graphType of graphTypes) {
             const GraphClass = graphTypeMap[graphType];
-            const graphInstance = new GraphClass(data);
-            graphInstance.draw(containerElementId, graphTypes.length);
+            const graphInstance = new GraphClass(data, this.options);
+            graphInstance.draw(containerElementId);
         }
 
-        window.addEventListener('resize', this.setChartContainerHeight);
     }
 
-    /**
-     * This method adjusts the height of all child elements inside the chart container
-     * based on the width of the container. The height is set to be half the width of the container.
-     * It's designed to be used as an event listener for the window resize event.
-     *
-     * @private
-     * @return {void}
-     */
-    private setChartContainerHeight = () => {
-        const chartContainer : HTMLElement | null = document.getElementById(this.options.containerElementId);
-
-        if (chartContainer) {
-            const children = Array.from(chartContainer.children);
-
-            children.forEach((child) => {
-                // Ensure the child is an instance of HTMLElement
-                if (child instanceof HTMLElement) {
-                    // Set the height of the child to be half the width of the chartContainer
-                    child.style.height = `${chartContainer.offsetWidth / 2}px`;
-                }
-            });
-        } else {
-            console.error(`Cannot find container with id ${this.options.containerElementId}`);
-        }
-    }
 }
