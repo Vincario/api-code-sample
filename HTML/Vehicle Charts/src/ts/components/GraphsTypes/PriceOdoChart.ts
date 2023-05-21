@@ -189,15 +189,19 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
             processedPriceValues.push(Math.floor(graphEntry["price"]));
         });
 
-        const trendLineDataPoints = processedOdometerValues.map((odoValue, index) => [odoValue, processedPriceValues[index]]);
-        const trendLineCoefficients = ss.linearRegression(trendLineDataPoints);
+        const trendLineDataPoints = processedOdometerValues.map((odometer, index) => ({x: odometer, y: processedPriceValues[index]}));
+        const trendLineCoefficients = ss.linearRegression(trendLineDataPoints.map(point => [point.x, point.y]));
+
         processedOdometerValues.sort((a, b) => a - b);
+        processedPriceValues.sort((a, b) => a - b);
 
         const minOdoValue = Math.min(...processedOdometerValues);
         const maxOdoValue = Math.max(...processedOdometerValues);
         const pointColors = this.getPointColors(processedOdometerValues, processedPriceValues, trendLineCoefficients);
-        const trendLineData = this.getTrendLineData(processedOdometerValues, trendLineCoefficients);
-
+        const trendLineData: IPoint[] = processedOdometerValues.map(odometer => ({
+            x: odometer,
+            y: this.getTrendLineY(odometer, trendLineCoefficients)
+        }));
 
         // If there is not enough data to create a chart, throw an error
         if (
@@ -224,7 +228,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
      * @param {string} [containerElementId=null] - The ID of the element that the chart should be appended to.
      * If null, the chart is appended to the document body.
      */
-    public draw(containerElementId = null) {
+    public draw(containerElementId = null,  grapTypesLength : number) {
         try {
             const processedData: IPriceOdoChartData = this.prepareChartData();
 
@@ -234,7 +238,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
             const chart = new Chart(ctx, config);
 
             // Wrap the chart and add the overlay
-            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId);
+            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId, grapTypesLength);
         } catch (error) {
             console.error(`Error creating chart: ${error.message}`);
         }

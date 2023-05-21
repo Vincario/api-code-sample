@@ -155,7 +155,6 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
                     intersect: false,
                     mode: 'index'
                 },
-                //responsive: true,
                 scales: {
                     y: {
                         display: true,
@@ -221,8 +220,9 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
     /**
      * Draws the chart inside a specified container element using the prepared chart data.
      * @param containerElementId The ID of the container element to draw the chart in.
+     * @param grapTypesLength
      */
-    draw(containerElementId: string) {
+    draw(containerElementId: string, grapTypesLength : number) {
 
         try {
             const processedData = this.prepareChartData();
@@ -243,7 +243,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
             // Todo: Overlay robi problem priminimalizovani aznovuzvacseni grafu (responzivita)
 
             // Wrap the chart and add the overlay
-            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId);
+            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId, grapTypesLength);
         } catch (error) {
             console.error(error);
         }

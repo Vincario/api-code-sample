@@ -1,13 +1,15 @@
 // index.ts
-import VincarioLib from "./components/VincarioLib";
+import VincarioLib from "./VincarioLib";
+import IVincarioLibConfig from "./interfaces/IVincarioLibConfig";
 
 window.onload = async () => {
-    const vincode = "WF0AXXGCDA2000000";
-    const options = {
+    const vincode :string = "WF0AXXGCDA2000000";
+    const options :IVincarioLibConfig = {
         containerElementId: "vincario-charts",
         graphs: [
             'PriceHistogramChart',
-            "PriceOdoChart"],
+            "PriceOdoChart"
+        ],
     };
 
     await new VincarioLib(vincode, options).init();

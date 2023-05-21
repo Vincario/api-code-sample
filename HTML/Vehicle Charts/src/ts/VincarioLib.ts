@@ -1,11 +1,11 @@
 // Vincario.ts
 
-import iVincarioChartsOptions from "../interfaces/IVincarioLibConfig";
 import VindecoderApi from "./VindecoderApi";
-import {GraphTypeMap} from "../types/ChartType";
-import IVindecoderApiResponse from "../interfaces/IVindecoderApiResponse";
-import PriceOdoChart from "./GraphsTypes/PriceOdoChart";
-import PriceHistogramChart from "./GraphsTypes/PriceHistogramChart";
+import {GraphTypeMap} from "./types/ChartType";
+import IVindecoderApiResponse from "./interfaces/IVindecoderApiResponse";
+import PriceOdoChart from "./components/GraphsTypes/PriceOdoChart";
+import PriceHistogramChart from "./components/GraphsTypes/PriceHistogramChart";
+import IVincarioLibConfig from "./interfaces/IVincarioLibConfig";
 
 /**
  * Vincario class, which is responsible for initializing and managing the Vincario charts
@@ -14,9 +14,9 @@ export default class VincarioLib {
     /**
      * Constructor takes a VIN code (Vehicle Identification Number) and options for Vincario charts
      * @param vincode: string - The VIN code of the vehicle
-     * @param options: iVincarioChartsOptions - The options for configuring the Vincario charts
+     * @param options: IVincarioLibConfig - The options for configuring the Vincario charts
      */
-    constructor(private vincode: string, private options: iVincarioChartsOptions) {
+    constructor(private vincode: string, private options: IVincarioLibConfig) {
     }
 
     /**
@@ -29,7 +29,7 @@ export default class VincarioLib {
             const api = new VindecoderApi(this.vincode);
 
             // Fetch the data from the VindecoderApi
-            const data : IVindecoderApiResponse = await api.fetchData();
+            const data: IVindecoderApiResponse = await api.fetchData();
 
             // Draw the Vincario charts with the fetched data and provided options
             this.draw(data);
@@ -45,7 +45,7 @@ export default class VincarioLib {
      */
     private draw(data: IVindecoderApiResponse): void {
 
-        const { graphs, containerElementId } = this.options;
+        const {graphs, containerElementId} = this.options;
 
         // Check if containerElementId exists
         const containerElement = document.getElementById(containerElementId);
@@ -67,7 +67,35 @@ export default class VincarioLib {
         for (const graphType of graphTypes) {
             const GraphClass = graphTypeMap[graphType];
             const graphInstance = new GraphClass(data);
-            graphInstance.draw(containerElementId);
+            graphInstance.draw(containerElementId, graphTypes.length);
+        }
+
+        window.addEventListener('resize', this.setChartContainerHeight);
+    }
+
+    /**
+     * This method adjusts the height of all child elements inside the chart container
+     * based on the width of the container. The height is set to be half the width of the container.
+     * It's designed to be used as an event listener for the window resize event.
+     *
+     * @private
+     * @return {void}
+     */
+    private setChartContainerHeight = () => {
+        const chartContainer : HTMLElement | null = document.getElementById(this.options.containerElementId);
+
+        if (chartContainer) {
+            const children = Array.from(chartContainer.children);
+
+            children.forEach((child) => {
+                // Ensure the child is an instance of HTMLElement
+                if (child instanceof HTMLElement) {
+                    // Set the height of the child to be half the width of the chartContainer
+                    child.style.height = `${chartContainer.offsetWidth / 2}px`;
+                }
+            });
+        } else {
+            console.error(`Cannot find container with id ${this.options.containerElementId}`);
         }
     }
 }

@@ -26,8 +26,9 @@ export default abstract class _BaseChart<TData> {
      * @param {string} containerElementId - ID of the container element to render the chart in.
      *                                      If not provided, the chart will be rendered in the
      *                                      document's body.
+     * @param grapTypesLength
      */
-    abstract draw(containerElementId: string = null): void;
+    abstract draw(containerElementId: string = null, grapTypesLength : number): void;
 
     /**
      * Processes the raw data received from the IVindecoderApiResponse and
@@ -81,10 +82,10 @@ export default abstract class _BaseChart<TData> {
     }
 
 
-    protected wrapAndAddOverlay(chartContainer: HTMLDivElement, chartCanvas: HTMLCanvasElement, containerElementId: string | null): void {
+    protected wrapAndAddOverlay(chartContainer: HTMLDivElement, chartCanvas: HTMLCanvasElement, containerElementId: string | null, grapTypesLength : number): void {
         chartContainer.style.position = 'relative';
 
-        // Add image overlay to chart container
+
         this.addImageOverlay(chartContainer);
 
         // Append chart canvas to container
