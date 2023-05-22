@@ -25,12 +25,8 @@ window.onload = async () => {
     const vincode :string = "WF0AXXGCDA2000000";
     const options :IVincarioLibConfig = {
         containerElementId: "vincario-charts",
-        currency: '€',
-        lengthUnit: 'km',
         language: 'cs',
         graphs: [
-            'OdometerReadingChart',
-            'AverageOdometerAndPriceChart',
             'PriceHistogramChart',
             "PriceOdoChart"
         ],
@@ -43,7 +39,5 @@ window.onload = async () => {
 ### Parameters explanation
 
 - `containerElementId` (String): The ID of the DOM element where the charts will be rendered. For example, `"vincario-charts"`.
-- `currency` (String): The currency unit for price display. For example, `"€"`.
-- `lengthUnit` (String): The unit for distance display. For example, `"km"`.
 - `language` (String): The language for localization. You can use_ `"en"` for English or `"cs"` for Czech.
-- `graphs` (Array): An array of graph names to be rendered. You can use one or all of them and the charts will be generated according to the order you specify `['OdometerReadingChart', 'AverageOdometerAndPriceChart', 'PriceHistogramChart', 'PriceOdoChart']`.
+- `graphs` (Array): An array of graph names to be rendered. You can use one or all of them and the charts will be generated according to the order you specify `['PriceHistogramChart', 'PriceOdoChart']`.

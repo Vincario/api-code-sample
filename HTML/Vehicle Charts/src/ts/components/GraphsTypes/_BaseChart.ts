@@ -65,23 +65,27 @@ export default abstract class _BaseChart<TData> {
      @returns void
      */
     protected addImageOverlay(container: HTMLElement) {
-        const image = document.createElement('img');
-        image.src = 'src/assets/logo.png';
-        image.style.position = 'absolute';
-        image.style.top = '100px'; //Todo: Toto je napicu spravene keď sa prida novy prvok tak to odskoci a clovek to musi meniť dynamicky... look later
-        image.style.right = '30px';
-        image.style.opacity = '0.7';
-        image.style.maxWidth = '100%';
-        image.style.width = '10%';
-        image.style.height = 'auto';
-        image.style.maxHeight = '70px';
-        image.style.zIndex = '99';
-        image.style.pointerEvents = 'none';
+        const image = document.createElement('a');
+        image.href = 'https://vindecoder.eu/';
+
+        const logo = document.createElement('img');
+        logo.src = 'src/assets/logo.png';
+        logo.style.position = 'absolute';
+        logo.style.top = '100px';
+        logo.style.right = '30px';
+        logo.style.opacity = '0.7';
+        logo.style.maxWidth = '100%';
+        logo.style.width = '10%';
+        logo.style.height = 'auto';
+        logo.style.maxHeight = '70px';
+        logo.style.zIndex = '99';
+
+        image.appendChild(logo);
 
         if (container) {
             container.appendChild(image);
         } else {
-            console.warn('container element not found.');
+            console.warn('Container element not found.');
             document.body.appendChild(image);
         }
     }

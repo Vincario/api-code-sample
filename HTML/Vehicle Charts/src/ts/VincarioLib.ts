@@ -49,7 +49,10 @@ export default class VincarioLib {
 
             // Fetch the data from the VindecoderApi
             const data: IVindecoderApiResponse = await api.fetchData();
-            console.log(data);
+
+            this.options.currency = data.records[0].price_currency ?? this.options.currency;
+            this.options.lengthUnit = data.market_odometer.odometer_unit ?? this.options.lengthUnit;
+
             // Draw the Vincario charts with the fetched data and provided options
             this.draw(data);
         } catch (error) {
@@ -75,8 +78,6 @@ export default class VincarioLib {
 
         // Create an object to map graph types to their respective classes
         const graphTypeMap: GraphTypeMap = {
-            OdometerReadingChart,
-            AverageOdometerAndPriceChart,
             PriceHistogramChart,
             PriceOdoChart,
         };

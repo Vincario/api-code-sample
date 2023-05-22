@@ -6,12 +6,8 @@ window.onload = async () => {
     const vincode :string = "WF0AXXGCDA2000000";
     const options :IVincarioLibConfig = {
         containerElementId: "vincario-charts",
-        currency: '€',
-        lengthUnit: 'km',
         language: 'cs',
         graphs: [
-            'OdometerReadingChart',
-            'AverageOdometerAndPriceChart',
             'PriceHistogramChart',
             "PriceOdoChart"
         ],
