@@ -16,7 +16,7 @@ apiKey = "API_KEY"
 secretKey = "API_SECRET"
 
 apiPrefix = "https://api.vindecoder.eu/3.2"
-id = "decode"
+id = "info"
 
 controlSum = hashlib.sha1((vin.upper()+"|"+id+"|"+apiKey+"|"+secretKey).encode('utf-8')).hexdigest()[:10]
 url = apiPrefix+"/"+apiKey+"/"+controlSum+"/decode/info/"+vin.upper()+".json"
