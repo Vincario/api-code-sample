@@ -14,6 +14,9 @@ export default class VindecoderApi {
      * @param vincode: string - The VIN code of the vehicle
      */
     constructor(private apiKey: string, private vincode: string) {
+        if (apiKey === "") {
+            throw new Error("API key is required.");
+        }
     }
 
     /**
@@ -29,8 +32,16 @@ export default class VindecoderApi {
         // Build the URL with the VIN code and apiKey
         const url = `${this.apiUrl}${this.apiKey}/6a6ceb2401/vehicle-market-value/${this.vincode}.json`;
 
-        // Fetch the data from the Vindecoder API
-        const response = await fetch(url);
-        return await response.json();
+        try {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch vehicle data. Status: ${response.status}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            throw new Error(`Failed to fetch vehicle data: ${error.message}`);
+        }
     }
 }

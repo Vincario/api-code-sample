@@ -18,7 +18,7 @@ export default class VincarioLib {
      * @param vincode: string - The VIN code of the vehicle
      * @param options: IVincarioLibConfig - The options for configuring the Vincario charts
      */
-    constructor(private vincode: string, private options: IVincarioLibConfig) {
+    constructor(private vincode: string, private readonly options: IVincarioLibConfig) {
 
         // Import styles for lib
         import('../styles/style.scss');
@@ -55,8 +55,12 @@ export default class VincarioLib {
      * @returns Promise<void> - A Promise that resolves when the initialization is complete
      */
     public async init(): Promise<void> {
-
         try {
+            // Check if options.apiKey is defined
+            if (this.options.apiKey === undefined ) {
+                throw new Error("API key is required.");
+            }
+
             // Create a new instance of the VindecoderApi class with the provided VIN code
             const api = new VindecoderApi(this.options.apiKey, this.vincode);
 
@@ -73,6 +77,7 @@ export default class VincarioLib {
             console.error("An error occurred while initializing Vincario:", error);
         }
     }
+
 
     /**
      * Initializes the Vincario charts with the provided data

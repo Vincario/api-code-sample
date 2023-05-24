@@ -8,8 +8,8 @@ window.onload = async () => {
     const apiKey :string = "0461edc86204";
 
     const options :IVincarioLibConfig = {
-        apiKey: apiKey,
-        containerElementId: "vincario-charts",
+        apiKey: apiKey, //Required if using Option 1
+        containerElementId: "vincario-charts", // This one is REQUIRED
         language: 'cs',
         graphs: [
             'PriceHistogramChart',
@@ -17,9 +17,9 @@ window.onload = async () => {
         ],
     };
     // Option 1
-    // await new VincarioLib(vincode, options).init();
+     await new VincarioLib(vincode, options).init();
 
     // Option 2
-    const results = await new VindecoderApi("0461edc86204",vincode).fetchData();
-    await new VincarioLib.createWithData(results, options);
+    //const results = await new VindecoderApi("0461edc86204",vincode).fetchData();
+    //await new VincarioLib.createWithData(results, options);
 };
