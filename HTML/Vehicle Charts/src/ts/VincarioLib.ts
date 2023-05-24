@@ -7,8 +7,6 @@ import PriceOdoChart from "./components/GraphsTypes/PriceOdoChart";
 import PriceHistogramChart from "./components/GraphsTypes/PriceHistogramChart";
 import IVincarioLibConfig from "./interfaces/IVincarioLibConfig";
 import {initI18n} from "../i18n/i18n";
-import AverageOdometerAndPriceChart from "./components/GraphsTypes/AverageOdometerAndPriceChart";
-import OdometerReadingChart from "./components/GraphsTypes/OdometerReadingChart";
 
 /**
  * Vincario class, which is responsible for initializing and managing the Vincario charts
@@ -38,6 +36,21 @@ export default class VincarioLib {
     }
 
     /**
+     * Alternative constructor that directly takes IVindecoderApiResponse data
+     * @param data: IVindecoderApiResponse - The data of the vehicle
+     * @param options: IVincarioLibConfig - The options for configuring the Vincario charts
+     */
+    public static createWithData(
+        data: IVindecoderApiResponse,
+        options: IVincarioLibConfig
+    ): VincarioLib {
+
+        const instance = new VincarioLib("", options);
+        instance.initWithData(data);
+        return instance;
+    }
+
+    /**
      * Asynchronous init method to initialize the Vincario charts
      * @returns Promise<void> - A Promise that resolves when the initialization is complete
      */
@@ -45,7 +58,7 @@ export default class VincarioLib {
 
         try {
             // Create a new instance of the VindecoderApi class with the provided VIN code
-            const api = new VindecoderApi(this.vincode);
+            const api = new VindecoderApi(this.options.apiKey, this.vincode);
 
             // Fetch the data from the VindecoderApi
             const data: IVindecoderApiResponse = await api.fetchData();
@@ -59,6 +72,18 @@ export default class VincarioLib {
             // Log the error if an exception occurs during initialization
             console.error("An error occurred while initializing Vincario:", error);
         }
+    }
+
+    /**
+     * Initializes the Vincario charts with the provided data
+     * @param data: IVindecoderApiResponse - The data of the vehicle
+     */
+    private initWithData(data: IVindecoderApiResponse): void {
+        this.options.currency = data.records[0].price_currency ?? this.options.currency;
+        this.options.lengthUnit = data.market_odometer.odometer_unit ?? this.options.lengthUnit;
+
+        // Draw the Vincario charts with the fetched data and provided options
+        this.draw(data);
     }
 
     /**

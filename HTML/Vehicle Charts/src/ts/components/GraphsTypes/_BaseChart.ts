@@ -69,7 +69,7 @@ export default abstract class _BaseChart<TData> {
         image.href = 'https://vindecoder.eu/';
 
         const logo = document.createElement('img');
-        logo.src = 'src/assets/logo.png';
+        logo.src = 'src/assets/logo.svg';
         logo.style.position = 'absolute';
         logo.style.top = '100px';
         logo.style.right = '30px';

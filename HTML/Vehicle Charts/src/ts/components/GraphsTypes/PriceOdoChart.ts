@@ -99,7 +99,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
                         }
                     },
                     backgroundImage: {
-                        image: 'src/assets/logo.png',
+                        image: 'src/assets/logo.svg',
                         x: 0,
                         y: 0,
                         width: '100%',

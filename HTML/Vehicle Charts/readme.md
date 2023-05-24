@@ -7,7 +7,7 @@ Library Name is a library for displaying graphs using our API on the background.
 You can install the library via package manager:
 
 ```bash 
-npm install ***library-name***
+npm install ***vincario-charts-api-lib***
 ```
 
 ## Usage

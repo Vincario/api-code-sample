@@ -6,4 +6,5 @@ export default interface IVincarioLibConfig {
     lengthUnit?: string,
     language?: string,
     graphs?: (keyof GraphTypeMap)[];
+    apiKey?: string,
 }

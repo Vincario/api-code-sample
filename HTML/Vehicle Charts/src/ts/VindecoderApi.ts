@@ -6,13 +6,14 @@ import IVindecoderApiResponse from "./interfaces/IVindecoderApiResponse";
  */
 export default class VindecoderApi {
     // API URL for the Vindecoder service
-    private readonly apiUrl = "https://api.vindecoder.eu/3.1/0461edc86204/6a6ceb2401/vehicle-market-value/";
+    private readonly apiUrl = "https://api.vindecoder.eu/3.1/";
 
     /**
      * Constructor takes the VIN code (Vehicle Identification Number) as an input
+     * @param apiKey: string - The API key for accessing the Vindecoder API
      * @param vincode: string - The VIN code of the vehicle
      */
-    constructor(private vincode: string) {
+    constructor(private apiKey: string, private vincode: string) {
     }
 
     /**
@@ -20,8 +21,13 @@ export default class VindecoderApi {
      * @returns Promise<IVindecoderApiResponse> - A Promise that resolves to an IVindecoderApiResponse object
      */
     public async fetchData(): Promise<IVindecoderApiResponse> {
-        // Build the URL with the VIN code
-        const url = `${this.apiUrl}${this.vincode}.json`;
+        // Check if apiKey is empty
+        if (this.apiKey === "") {
+            throw new Error("API key is required.");
+        }
+
+        // Build the URL with the VIN code and apiKey
+        const url = `${this.apiUrl}${this.apiKey}/6a6ceb2401/vehicle-market-value/${this.vincode}.json`;
 
         // Fetch the data from the Vindecoder API
         const response = await fetch(url);
