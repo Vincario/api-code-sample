@@ -62,13 +62,23 @@ export default class VincarioLib {
             }
 
             // Create a new instance of the VindecoderApi class with the provided VIN code
-            const api = new VindecoderApi(this.options.apiKey, this.vincode);
+            const api = new VindecoderApi(this.options.apiKey, this.options.apiSecret, this.vincode);
 
             // Fetch the data from the VindecoderApi
             const data: IVindecoderApiResponse = await api.fetchData();
 
-            this.options.currency = data.records[0].price_currency ?? this.options.currency;
-            this.options.lengthUnit = data.market_odometer.odometer_unit ?? this.options.lengthUnit;
+            if (data.records && data.records[0]) {
+                this.options.currency = data.records[0].price_currency ?? this.options.currency;
+            } else {
+                throw new Error("No records received from Vindecoder API.");
+            }
+
+            if (data.market_odometer) {
+                this.options.lengthUnit = data.market_odometer.odometer_unit ?? this.options.lengthUnit;
+            } else {
+                throw new Error("No market odometer data received from Vindecoder API.");
+            }
+
 
             // Draw the Vincario charts with the fetched data and provided options
             this.draw(data);
