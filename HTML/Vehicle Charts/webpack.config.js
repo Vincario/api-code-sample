@@ -1,5 +1,9 @@
+const path = require('path');
+
 module.exports = {
-    entry: './src/index.ts',
+    entry: {
+        main: ['./src/index.ts', './src/styles/style.scss']
+    },
     mode: 'development',
     module: {
         rules: [
@@ -33,8 +37,8 @@ module.exports = {
         extensions: ['.ts', '.js', '.scss', '.sass']
     },
     output: {
-        filename: 'index.js',
-        path: __dirname + '/dist'
+        filename: 'vincario-charts-lib.js',
+        path: path.resolve(__dirname, 'dist')
     },
     devtool: 'inline-source-map',
 };

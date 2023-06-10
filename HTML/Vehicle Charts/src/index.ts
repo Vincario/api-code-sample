@@ -1,27 +1,46 @@
-// index.ts
 import VincarioLib from "./ts/VincarioLib";
-import IVincarioLibConfig from "./ts/interfaces/IVincarioLibConfig";
-import VindecoderApi from "./ts/VindecoderApi"; // For Option 2 only
 
 window.onload = async () => {
-    const vincode :string = "WF0AXXGCDA2000000";
-    const apiKey :string = "54c2c8564609";
-    const apiSecret :string = "b375d5eeae";
 
-    const options :IVincarioLibConfig = {
-        apiKey: apiKey, //Required if using Option 1
-        apiSecret: apiSecret, //Required if using Option 1
-        containerElementId: "vincario-charts", // This one is REQUIRED
-        language: 'cs',
-        graphs: [
-            'PriceHistogramChart',
-            "PriceOdoChart"
-        ],
-    };
-    // Option 1
-     await new VincarioLib(vincode, options).init();
+    const chartContainers = document.getElementsByClassName('vincario-vehicle-market-value-charts');
 
-    // Option 2
-    // const results = await new VindecoderApi(apiKey,apiSecret,vincode).fetchData();
-    // await new VincarioLib.createWithData(results, options);
-};
+    for(let i = 0; i < chartContainers.length; i++) {
+        const container = chartContainers[i];
+        const children = container.childNodes;
+        const dataRecords = JSON.parse(container.getAttribute('data-records'));
+
+        let hasPriceDistribution = false;
+        let hasPriceMap = false;
+
+        for (let j = 0; j < children.length; j++) {
+            const child = children[j];
+
+            if (child.classList) {
+                if (child.classList.contains('vehicle-price-distribution')) {
+                    hasPriceDistribution = true;
+                }
+                if (child.classList.contains('vehicle-price-map')) {
+                    hasPriceMap = true;
+                }
+            }
+        }
+
+        const graphsToShow = [];
+
+        if (hasPriceDistribution) {
+            graphsToShow.push('PriceHistogramChart');
+        }
+
+        if (hasPriceMap) {
+            graphsToShow.push('PriceOdoChart');
+        }
+
+        if(graphsToShow.length > 0){
+            new VincarioLib.createWithData(dataRecords, {
+                containerElement: container,
+                language:'en',
+                graphs: graphsToShow,
+            });
+        }
+    }
+}

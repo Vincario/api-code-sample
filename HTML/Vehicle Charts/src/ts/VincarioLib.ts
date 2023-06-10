@@ -107,10 +107,9 @@ export default class VincarioLib {
      */
     private draw(data: IVindecoderApiResponse): void {
 
-        const {graphs, containerElementId} = this.options;
+        const {graphs, containerElement} = this.options;
 
         // Check if containerElementId exists
-        const containerElement = document.getElementById(containerElementId);
         if (!containerElement) {
             console.error("Container element not found.");
             return;
@@ -129,7 +128,7 @@ export default class VincarioLib {
         for (const graphType of graphTypes) {
             const GraphClass = graphTypeMap[graphType];
             const graphInstance = new GraphClass(data, this.options);
-            graphInstance.draw(containerElementId);
+            graphInstance.draw(containerElement);
         }
 
     }

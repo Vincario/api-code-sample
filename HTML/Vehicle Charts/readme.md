@@ -1,59 +1,42 @@
-# Library Name
+# User Guide for `vincario-charts-lib`
 
-Library Name is a vincario-charts-api-lib for displaying graphs using our API on the background.
+The following guide will help you integrate our `vincario-charts-lib` library into your website. This library allows you to easily embed various types of vehicle market value charts.
 
-## Installation
+## Step 0: Download the library
 
-You can install the library via package manager:
+Start by downloading the `vincario-charts-lib` library. You can find it [here](url-to-download). Once downloaded, ensure to include the `vincario-charts-lib.js` file into your project's directory.
 
-```bash 
-npm install vincario-charts-api-lib
+## Step 1: Insert the script into your webpage
+
+Next, insert the following script tag just before the closing `</body>` tag in your HTML file.
+
+```html
+<script src="*path*/vincario-charts-lib.js"></script>
 ```
 
-## Usage
+Replace `*path*` with the path leading to the `vincario-charts-lib.js` script within your project.
 
-Import the library into your project:
+## Step 2: Create the div structure for your charts
 
-```javascript 
-import VincarioLib from "./ts/VincarioLib";
+Then, create a `div` structure according to the types of charts you wish to display. You have the freedom to choose either one or both types of charts - vehicle price distribution and vehicle price map. Remove the unnecessary divs according to your requirements. For instance, to display both charts, you may use the following code:
+
+```html
+<div class="vinacrio-vehicle-market-value-charts" data-records="this-is-the-important-attribute">
+  <div class="vehicle-price-distribution"></div> 
+  <div class="vehicle-price-map"></div>
+</div>
 ```
 
-Create an instance of the library and set the graph parameters:
-```
-import VincarioLib from "./ts/VincarioLib";
-import IVincarioLibConfig from "./ts/interfaces/IVincarioLibConfig";
-import VindecoderApi from "./ts/VindecoderApi"; // For Option 2 only
+The important attribute to be filled according to your requirements is `data-records`.
 
-window.onload = async () => {
-    const vincode :string = "WF0AXXGCDA2000000";
-    const apiKey :string = "54c2c8564609";
-    const apiSecret :string = "b375d5eeae";
+## Step 3: Populate the data-records
 
-    const options :IVincarioLibConfig = {
-        apiKey: apiKey,                         //Required if using Option 1
-        apiSecret: apiSecret,                   //Required if using Option 1
-        containerElementId: "vincario-charts",  // This one is REQUIRED
-        language: 'cs',                         // other option is en
-        graphs: [                               // You can choose which graph should be displayed and the order matters too
-            'PriceHistogramChart',
-            "PriceOdoChart"
-        ],
-    };
-    // Option 1
-     await new VincarioLib(vincode, options).init();
+The `data-records` attribute should be populated according to your needs. You need to fetch this data through our API. Look for more info at [https://vindecoder.eu/api/](https://vindecoder.eu/api/). It is a crucial attribute that dictates the data to be displayed on the charts.
 
-    // Option 2
-    // const results = await new VindecoderApi(apiKey,apiSecret,vincode).fetchData();
-    // await new VincarioLib.createWithData(results, options);
-};
-```
+## Step 4: Enjoy your charts!
 
-As you can see above you can go by two ways to make the lib works. 
-If Everything works yu should see at least one graph. It depends´s on your configuration.
+That's it! You should now be able to see the charts on your webpage.
 
-### Parameters explanation
-- `apiKey`: Your generated apiKey from (https://vindecoder.eu/my/api/3.2/docs#examples-vehicle-market-value)
-- `apiSecret`: Your generated apiSecret from,(https://vindecoder.eu/my/api/3.2/docs#examples-vehicle-market-value)
-- `containerElementId` (String): The ID of the DOM element where the charts will be rendered. For example, `"vincario-charts"`.
-- `language` (String): The language for localization. You can use_ `"en"` for English or `"cs"` for Czech.
-- `graphs` (Array): An array of graph names to be rendered. You can use one or all of them and the charts will be generated according to the order you specify `['PriceHistogramChart', 'PriceOdoChart']`.
+Please remember that if you have any questions or issues integrating our library, don't hesitate to contact us. We look forward to your feedback!
+
+_Enjoy using our library!_ 🍷

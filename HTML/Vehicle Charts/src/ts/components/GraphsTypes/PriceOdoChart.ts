@@ -253,7 +253,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
      * @param {string} [containerElementId=null] - The ID of the element that the chart should be appended to.
      * If null, the chart is appended to the document body.
      */
-    public draw(containerElementId = null) {
+    public draw(containerElement = null) {
         try {
             const processedData: IPriceOdoChartData = this.prepareChartData();
 
@@ -263,7 +263,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
             const chart = new Chart(ctx, config);
 
             // Wrap the chart and add the overlay
-            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId);
+            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElement);
             this.createCartHeader(chartContainer);
 
         } catch (error) {

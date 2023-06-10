@@ -1,7 +1,7 @@
 import {GraphTypeMap} from "../types/ChartType";
 
 export default interface IVincarioLibConfig {
-    containerElementId: string;
+    containerElement: Element;
     currency?: string,
     lengthUnit?: string,
     language?: string,
