@@ -7,7 +7,22 @@ window.onload = async () => {
     for(let i = 0; i < chartContainers.length; i++) {
         const container = chartContainers[i];
         const children = container.childNodes;
-        const dataRecords = JSON.parse(container.getAttribute('data-records'));
+        let dataRecords;
+
+        // Try to parse data records and handle errors
+        try {
+            const data = container.getAttribute('data-records');
+            // Check if data is not empty or not undefined
+            if (!data) {
+                console.error("Missing data-records attribute or it is empty.");
+                continue; // Skip to the next iteration
+            }
+
+            dataRecords = JSON.parse(data);
+        } catch (error) {
+            console.error("Error parsing data-records:", error);
+            continue; // Skip to the next iteration
+        }
 
         let hasPriceDistribution = false;
         let hasPriceMap = false;
