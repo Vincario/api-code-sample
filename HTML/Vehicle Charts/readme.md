@@ -21,7 +21,7 @@ Replace `*path*` with the path leading to the `vincario-charts-lib.js` script wi
 Then, create a `div` structure according to the types of charts you wish to display. You have the freedom to choose either one or both types of charts - vehicle price distribution and vehicle price map. Remove the unnecessary divs according to your requirements. For instance, to display both charts, you may use the following code:
 
 ```html
-<div class="vinacrio-vehicle-market-value-charts" data-records="this-is-the-important-attribute">
+<div class="vincario-vehicle-market-value-charts" data-records="this-is-the-important-attribute">
   <div class="vehicle-price-distribution"></div> 
   <div class="vehicle-price-map"></div>
 </div>

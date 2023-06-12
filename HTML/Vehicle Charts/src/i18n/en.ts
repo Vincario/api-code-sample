@@ -1,5 +1,6 @@
 export default {
-    MARKET_VALUE: "Market value",
+    VEHICLE_PRICE_DISTRIBUTION: "Vehicle Price Distribution",
+    VEHICLE_PRICE_MAP: "Vehicle Price Map",
     PRICE: "Price",
     ODOMETER: "Odometer",
     TRENDLINE: "Trendline",

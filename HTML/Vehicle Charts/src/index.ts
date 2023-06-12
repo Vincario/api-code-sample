@@ -1,7 +1,7 @@
 import VincarioLib from "./ts/VincarioLib";
 
 window.onload = async () => {
-
+    console.log("Vincario-charts-plugin initialized... ");
     const chartContainers = document.getElementsByClassName('vincario-vehicle-market-value-charts');
 
     for(let i = 0; i < chartContainers.length; i++) {

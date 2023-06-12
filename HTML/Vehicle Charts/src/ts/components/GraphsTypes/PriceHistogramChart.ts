@@ -221,7 +221,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
     private createCartHeader(chartContainer:HTMLElement):void{
         // Create chart header element
         const chartHeader = document.createElement('p');
-        chartHeader.textContent = `${i18next.t('MARKET_VALUE')}: ${this._data.vehicle.model} (${this._data.vehicle.model_year})`;
+        chartHeader.textContent = `${i18next.t('VEHICLE_PRICE_DISTRIBUTION')}: ${this._data.vehicle.model} (${this._data.vehicle.model_year})`;
         chartHeader.classList.add('chartHeader');
 
         // Create chart explanatory element
@@ -240,10 +240,10 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
 
     /**
      * Draws the chart inside a specified container element using the prepared chart data.
-     * @param containerElementId The ID of the container element to draw the chart in.
+     * @param containerElement The ID of the container element to draw the chart in.
      * @param data
      */
-    draw(containerElementId: string) {
+    draw(containerElement = null) {
 
         try {
             const processedData = this.prepareChartData();
@@ -262,7 +262,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
             const chart = new Chart(ctx, config);
 
             // Wrap the chart and add the overlay
-            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElementId);
+            this.wrapAndAddOverlay(chartContainer, chart.canvas, containerElement);
             this.createCartHeader(chartContainer);
 
         } catch (error) {

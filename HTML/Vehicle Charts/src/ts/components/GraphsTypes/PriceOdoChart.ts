@@ -229,7 +229,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
     private createCartHeader(chartContainer:HTMLElement):void{
         // Create chart header element
         const chartHeader = document.createElement('p');
-        chartHeader.textContent = `${i18next.t('PRICE')} (${this._options.currency}) / ${i18next.t('ODOMETER')} (${this._options.lengthUnit}): ${this._data.vehicle.model} (${this._data.vehicle.model_year})`;
+        chartHeader.textContent = `${i18next.t('VEHICLE_PRICE_MAP')}: ${this._data.vehicle.model} (${this._data.vehicle.model_year})`;
         chartHeader.classList.add('chartHeader');
 
         // Create chart explanatory element

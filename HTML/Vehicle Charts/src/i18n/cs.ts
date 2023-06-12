@@ -1,5 +1,6 @@
 export default {
-    MARKET_VALUE: "Tržní hodnota",
+    VEHICLE_PRICE_DISTRIBUTION: "ROZDĚLENÍ CENY VOZIDLA",
+    VEHICLE_PRICE_MAP: "Ceník vozidel",
     PRICE: "Cena",
     ODOMETER: "Nájezd",
     TRENDLINE: "Trendová čára",
