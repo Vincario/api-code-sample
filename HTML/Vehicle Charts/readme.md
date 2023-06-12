@@ -4,7 +4,7 @@ The following guide will help you integrate our `vincario-charts-lib` library in
 
 ## Step 0: Download the library
 
-Start by downloading the `vincario-charts-lib` library. You can find it [here](url-to-download). Once downloaded, ensure to include the `vincario-charts-lib.js` file into your project's directory.
+Start by downloading the `vincario-charts-lib.js` file from dist/ folder. Once downloaded, ensure to include the `vincario-charts-lib.js` file into your project's directory.
 
 ## Step 1: Insert the script into your webpage
 
