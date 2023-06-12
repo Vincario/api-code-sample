@@ -180,8 +180,6 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
             processedPriceValues.push(Math.floor(graphEntry["price"]));
         });
 
-        processedPriceValues.sort((a, b) => a - b);
-
         const minOdoValue = Math.min(...processedOdometerValues);
         const maxOdoValue = Math.max(...processedOdometerValues);
 
@@ -191,11 +189,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
             const odometer = processedOdometerValues[i];
             const price = processedPriceValues[i];
 
-            // Check if the x-value (odometer) is already in uniqueXValues
-            if (!uniqueXValues.has(odometer)) {
-                uniqueXValues.add(odometer);
-                trendLineDataPoints.push({ x: odometer, y: price });
-            }
+            trendLineDataPoints.push({ x: odometer, y: price });
         }
         const trendLineCoefficients = ss.linearRegression(trendLineDataPoints.map(point => [point.x, point.y]));
         const trendLineData: IPoint[] = trendLineDataPoints.map(point => {
@@ -228,7 +222,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
     private createCartHeader(chartContainer:HTMLElement):void{
         // Create chart header element
         const chartHeader = document.createElement('p');
-        chartHeader.textContent = `${i18next.t('VEHICLE_PRICE_MAP')}: ${this._data.vehicle.model} (${this._data.vehicle.model_year})`;
+        chartHeader.textContent = `${i18next.t('VEHICLE_PRICE_MAP')}: ${this._data.vehicle.make} ${this._data.vehicle.model} ${this._data.vehicle.model_year}`;
         chartHeader.classList.add('chartHeader');
 
         // Create chart explanatory element

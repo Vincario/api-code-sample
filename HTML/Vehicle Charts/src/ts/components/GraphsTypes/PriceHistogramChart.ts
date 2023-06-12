@@ -221,7 +221,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
     private createCartHeader(chartContainer:HTMLElement):void{
         // Create chart header element
         const chartHeader = document.createElement('p');
-        chartHeader.textContent = `${i18next.t('VEHICLE_PRICE_DISTRIBUTION')}: ${this._data.vehicle.model} (${this._data.vehicle.model_year})`;
+        chartHeader.textContent = `${i18next.t('VEHICLE_PRICE_DISTRIBUTION')}: ${this._data.vehicle.make} ${this._data.vehicle.model} ${this._data.vehicle.model_year}`;
         chartHeader.classList.add('chartHeader');
 
         // Create chart explanatory element
