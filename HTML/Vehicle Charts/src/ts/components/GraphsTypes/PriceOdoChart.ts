@@ -180,7 +180,6 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
             processedPriceValues.push(Math.floor(graphEntry["price"]));
         });
 
-        processedOdometerValues.sort((a, b) => a - b);
         processedPriceValues.sort((a, b) => a - b);
 
         const minOdoValue = Math.min(...processedOdometerValues);
