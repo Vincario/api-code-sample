@@ -1,4 +1,5 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -39,6 +40,12 @@ module.exports = {
     output: {
         filename: 'vincario-charts-lib.js',
         path: path.resolve(__dirname, 'dist')
+    },
+    optimization: {
+        minimize: true,
+        minimizer: [new TerserPlugin({
+            extractComments: false,
+        }),],
     },
     devtool: 'inline-source-map',
 };
