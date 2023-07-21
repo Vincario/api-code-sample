@@ -1,7 +1,9 @@
 /**
  * Redirect to URL with decode results
  */
-function decodeAction() {
+function decodeAction(event) {
+    event.preventDefault();
+
     const errors = validateInput();
 
     const vinInput = document.getElementById('vinDecodeInput');
@@ -9,9 +11,7 @@ function decodeAction() {
         return;
 
     if (errors.length === 0) {
-        const form = document.getElementById("vindecoder-form");
-        form.action = "https://vindecoder.eu/check-vin/" + vinInput.value;
-        form.submit();
+        window.location.href = "https://vindecoder.eu/check-vin/" + vinInput.value;
     } else {
         showErrors(true, errors);
     }
