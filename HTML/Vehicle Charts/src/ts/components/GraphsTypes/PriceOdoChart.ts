@@ -1,5 +1,5 @@
 import * as ss from 'simple-statistics';
-import Chart from "chart.js/auto";
+import { Chart } from 'chart.js';
 import _BaseChart from "./_BaseChart";
 import {ITrendLine} from "../../interfaces/ITrendLine";
 import {IPoint} from "../../interfaces/IPoint";

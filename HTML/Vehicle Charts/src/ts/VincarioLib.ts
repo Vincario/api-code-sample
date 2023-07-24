@@ -1,11 +1,10 @@
 // Vincario.ts
 
-import {GraphTypeMap} from "./types/ChartType";
 import IVindecoderApiResponse from "./interfaces/IVindecoderApiResponse";
 import PriceOdoChart from "./components/GraphsTypes/PriceOdoChart";
 import PriceHistogramChart from "./components/GraphsTypes/PriceHistogramChart";
 import IVincarioLibConfig from "./interfaces/IVincarioLibConfig";
-import {initI18n} from "../i18n/i18n";
+import { initI18n } from "../i18n/i18n";
 
 /**
  * Vincario class, which is responsible for initializing and managing the Vincario charts
@@ -22,8 +21,7 @@ export default class VincarioLib {
         // Import styles for lib
         import('../styles/style.scss');
 
-        // Initialize translations
-        initI18n(options.language || 'en');
+        initI18n('en');
 
         // Set default vales for some options
         this.options = {
@@ -75,20 +73,18 @@ export default class VincarioLib {
             return;
         }
 
-        // Create an object to map graph types to their respective classes
-        const graphTypeMap: GraphTypeMap = {
-            PriceHistogramChart,
-            PriceOdoChart,
-        };
-
-        // If no specific graphs are provided, draw all available graphs
-        const graphTypes = graphs ?? Object.keys(graphTypeMap);
-
         // Iterate through the available graph types
-        for (const graphType of graphTypes) {
-            const GraphClass = graphTypeMap[graphType];
-            const graphInstance = new GraphClass(data, this.options);
-            graphInstance.draw(containerElement);
+        for (const graph of graphs) {
+            if(graph === "PriceHistogramChart"){
+                const graphInstance = new PriceHistogramChart(data, this.options);
+                graphInstance.draw(containerElement);
+            }
+            else if(graph === "PriceOdoChart"){
+                const graphInstance = new PriceOdoChart(data, this.options);
+                graphInstance.draw(containerElement);
+            }else{
+                console.error("Bad input for parameter Graphs. Please check documentation.");
+            }
         }
 
     }

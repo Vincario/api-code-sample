@@ -1,9 +1,10 @@
-import {LinearScale} from "chart.js";
-import Chart from "chart.js/auto";
+import { Chart, LinearScale, LineController, PointElement, LineElement, Filler } from 'chart.js';
 import _BaseChart from "./_BaseChart";
 import {IChartConfig} from "../../interfaces/IChartConfig";
 import {IPriceHistogramChartData} from "../../interfaces/IPriceHistogramChartData";
 import i18next from "i18next";
+
+Chart.register(LinearScale, LineController, PointElement, LineElement, Filler);
 
 export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChartData> {
 
@@ -250,10 +251,6 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
 
             if (processedData.prices.length === 0) {
                 throw new Error('No data to display');
-            }
-
-            if (!Chart.registry.getScale('linear')) {
-                Chart.register(LinearScale);
             }
 
             const chartContainer = document.createElement('div');
