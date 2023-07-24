@@ -1,6 +1,5 @@
 // Vincario.ts
 
-import VindecoderApi from "./VindecoderApi";
 import {GraphTypeMap} from "./types/ChartType";
 import IVindecoderApiResponse from "./interfaces/IVindecoderApiResponse";
 import PriceOdoChart from "./components/GraphsTypes/PriceOdoChart";
@@ -49,45 +48,6 @@ export default class VincarioLib {
         instance.initWithData(data);
         return instance;
     }
-
-    /**
-     * Asynchronous init method to initialize the Vincario charts
-     * @returns Promise<void> - A Promise that resolves when the initialization is complete
-     */
-    public async init(): Promise<void> {
-        try {
-            // Check if options.apiKey is defined
-            if (this.options.apiKey === undefined ) {
-                throw new Error("API key is required.");
-            }
-
-            // Create a new instance of the VindecoderApi class with the provided VIN code
-            const api = new VindecoderApi(this.options.apiKey, this.options.apiSecret, this.vincode);
-
-            // Fetch the data from the VindecoderApi
-            const data: IVindecoderApiResponse = await api.fetchData();
-
-            if (data.records && data.records[0]) {
-                this.options.currency = data.records[0].price_currency ?? this.options.currency;
-            } else {
-                throw new Error("No records received from Vindecoder API.");
-            }
-
-            if (data.market_odometer) {
-                this.options.lengthUnit = data.market_odometer.odometer_unit ?? this.options.lengthUnit;
-            } else {
-                throw new Error("No market odometer data received from Vindecoder API.");
-            }
-
-
-            // Draw the Vincario charts with the fetched data and provided options
-            this.draw(data);
-        } catch (error) {
-            // Log the error if an exception occurs during initialization
-            console.error("An error occurred while initializing Vincario:", error);
-        }
-    }
-
 
     /**
      * Initializes the Vincario charts with the provided data
