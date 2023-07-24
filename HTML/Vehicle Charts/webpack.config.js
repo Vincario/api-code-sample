@@ -47,5 +47,4 @@ module.exports = {
             extractComments: false,
         }),],
     },
-    devtool: 'inline-source-map',
 };
