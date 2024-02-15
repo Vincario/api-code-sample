@@ -6,17 +6,25 @@ const vinDecoder = require('./vinDecoder');
 let vin = 'WF0MXXGBWM8R43240';
 
 try {
-  let response1 = await vinDecoder('info', vin);
-  console.log(response1);
+  // Vindecode Info
+  vinDecoder('info', vin).then(function (resp) {
+	  console.log(resp);
+  })
+  
+  // Vindecode
+  vinDecoder('decode', vin).then(function (resp) {
+	  console.log(resp);
+  })
 
-  let response2 = await vinDecoder('decode', vin);
-  console.log(response2);
+  // Stolen Check
+  vinDecoder('stolen-check', vin).then(function (resp) {
+	  console.log(resp);
+  })
 
-  let response3 = await vinDecoder('stolen-check', vin);
-  console.log(response3);
-
-  let response4 = await vinDecoder('balance');
-  console.log(response4);
+  // API Balance
+  vinDecoder('balance').then(function (resp) {
+	  console.log(resp);
+  })
 } catch (error) {
   console.log(error);
 }
