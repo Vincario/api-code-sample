@@ -1,0 +1,38 @@
+# Sign up at https://vincario.com/create-account/ and request API keys
+# See API documentation at https://vincario.com/api-docs/3.2/
+
+install.packages (c("httr", "jsonlite", "digest"))
+library(httr)
+library(jsonlite)
+library(digest)
+
+
+apiPrefix = 'https://api.vincario.com/3.2/'
+apikey = ''         # Copy your Apikey
+secretkey = ''      # Copy your Secretkey
+id = 'decode'
+vin = 'WF0MXXGBWM8R43240'
+
+# Generate control sum
+controlsumStrings = paste(vin,id,apikey,secretkey,sep="|")
+controlsum = substr(digest(controlsumStrings, "sha1", raw=FALSE, serialize=FALSE),0, 10)
+
+# Build request URL
+requestUrl = paste(apiPrefix,apikey, '/', controlsum, '/', id, '/', vin, '.json',sep="")
+print(requestUrl)
+
+# Send GET request
+response <- GET(requestUrl)
+
+# Check response status
+if (status_code(response) == 200) {
+  # Parse JSON content
+  json_data <- fromJSON(content(response, "text", encoding = "UTF-8"), flatten = TRUE)
+  
+  # Print full JSON
+  print(json_data)
+  
+} else {
+  cat("Request failed with status:", status_code(response), "\n")
+  print(content(response, "text"))
+}
