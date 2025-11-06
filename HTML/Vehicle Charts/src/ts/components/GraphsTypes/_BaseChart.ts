@@ -66,7 +66,7 @@ export default abstract class _BaseChart<TData> {
      */
     protected addImageOverlay(container: HTMLElement) {
         const image = document.createElement('a');
-        image.href = 'https://vindecoder.eu/';
+        image.href = 'https://vincario.com/';
 
         const logo = document.createElement('img');
 

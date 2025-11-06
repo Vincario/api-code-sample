@@ -4,7 +4,7 @@ info:
   description: Vincario API services
   version: '3.2'
 servers:
-  - url: https://api.vindecoder.eu
+  - url: https://api.vincario.com
 paths:
   /3.2/decode/{VIN}.{format}:
     get:
@@ -32,7 +32,7 @@ paths:
           default: json
       - name: X-API-Key
         in: header
-        description: Request API key at https://vindecoder.eu/api/
+        description: Request API key at https://vincario.com/vin-decoder/
         required: false
         style: simple
         explode: false
@@ -49,7 +49,7 @@ paths:
                 "0":
                   value: '{"price":0,"price_currency":"CZK","balance":{"API Decode":17,"API Stolen Check":4,"API Vehicle Market Value":4},"decode":[{"label":"VIN","value":"WF05XXGC055870807"},{"label":"Vehicle ID","value":1619},{"label":"Make","value":"Ford","id":30},{"label":"Model","value":"Focus","id":17779},{"label":"Model Year","value":2005},{"label":"Product Type","value":"Car","id":4},{"label":"Body","value":"Hatchback\/Liftback\/Notchback","id":5},{"label":"Series","value":"Mk2 (2004-2011)"},{"label":"Drive","value":"Front-wheel drive","id":1},{"label":"Transmission","value":"Manual\/Standard","id":6},{"label":"Number of Gears","value":5},{"label":"Emission Standard","value":"Euro 4"},{"label":"Manufacturer","value":"Ford Werke AG"},{"label":"Manufacturer Address","value":"Koeln-Niehl, Germany"},{"label":"Plant Country","value":"Germany"},{"label":"Average CO2 Emission (g\/km)","value":152.21},{"label":"Number of Axles","value":2},{"label":"Number of Doors","value":4},{"label":"Number of Seats","value":"5"},{"label":"Steering Type","value":"Steering rack and pinion"},{"label":"Wheel Size","value":"195\/65R15*205\/50R17*205\/55R16"},{"label":"Wheel Size Array","value":["195\/65R15*205\/50R17*205\/55R16"]},{"label":"Wheelbase (mm)","value":2640},{"label":"Wheelbase Array (mm)","value":[2640]},{"label":"Height (mm)","value":1497},{"label":"Length (mm)","value":4342},{"label":"Width (mm)","value":1840},{"label":"Track Front (mm)","value":1535},{"label":"Track Rear (mm)","value":1531},{"label":"Max Speed (km\/h)","value":190},{"label":"Weight Empty (kg)","value":1249},{"label":"Max Weight (kg)","value":1730},{"label":"Max roof load (kg)","value":75},{"label":"Permitted trailer load without brakes (kg)","value":620},{"label":"ABS","value":1},{"label":"Check Digit","value":"0"},{"label":"Sequential Number","value":"870807"}]}'
     servers:
-      - url: https://api.vindecoder.eu
+      - url: https://api.vincario.com
   /3.2/vehicle-market-value/{VIN}.{format}:
     get:
       description: Vehicle Market Value
@@ -76,7 +76,7 @@ paths:
           default: json
       - name: X-API-Key
         in: header
-        description: Request API key at https://vindecoder.eu/api/
+        description: Request API key at https://vincario.com/vin-decoder/
         required: false
         style: simple
         explode: false
@@ -207,7 +207,7 @@ paths:
                       ]
                     }
     servers:
-    - url: https://api.vindecoder.eu
+    - url: https://api.vincario.com
   /3.2/stolen-check/{VIN}.{format}:
     get:
       description: Stolen Check
@@ -232,7 +232,7 @@ paths:
           in: header
           schema:
             type: string
-          description: Request API key at https://vindecoder.eu/api/
+          description: Request API key at https://vincario.com/vin-decoder/
       responses:
         '200':
           description: Response example
@@ -272,6 +272,6 @@ paths:
                     Decode":18,"API Stolen Check":4,"API Vehicle Market
                     Value":4},"stolen":[{"code":"cz","status":"stolen"},{"code":"hu","status":"not-stolen"},{"code":"ro","status":"not-stolen"},{"code":"si","status":"not-stolen"},{"code":"vincario","status":"not-stolen"}]}
       servers:
-        - url: https://api.vindecoder.eu
+        - url: https://api.vincario.com
     servers:
-      - url: https://api.vindecoder.eu
+      - url: https://api.vincario.com

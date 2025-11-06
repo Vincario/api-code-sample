@@ -33,7 +33,7 @@
 										"method": "GET",
 										"header": [
 											{
-												"description": "Request API key at https://vindecoder.eu/api/",
+												"description": "Request API key at https://vincario.com/vin-decoder/",
 												"key": "X-API-Key",
 												"value": ""
 											},
@@ -84,7 +84,7 @@
 										"method": "GET",
 										"header": [
 											{
-												"description": "Request API key at https://vindecoder.eu/api/",
+												"description": "Request API key at https://vincario.com/vin-decoder/",
 												"key": "X-API-Key",
 												"value": ""
 											},
@@ -94,12 +94,12 @@
 											}
 										],
 										"url": {
-											"raw": "https://api.vindecoder.eu/3.2/stolen-check/{{VIN}}.{{format}}",
+											"raw": "https://api.vincario.com/3.2/stolen-check/{{VIN}}.{{format}}",
 											"protocol": "https",
 											"host": [
 												"api",
-												"vindecoder",
-												"eu"
+												"vincario",
+												"com"
 											],
 											"path": [
 												"3.2",
@@ -116,18 +116,18 @@
 												"method": "GET",
 												"header": [
 													{
-														"description": "Request API key at https://vindecoder.eu/api/",
+														"description": "Request API key at https://vincario.com/vin-decoder/",
 														"key": "X-API-Key",
 														"value": "<string>"
 													}
 												],
 												"url": {
-													"raw": "https://api.vindecoder.eu/3.2/stolen-check/{{VIN}}.{{format}}",
+													"raw": "https://api.vincario.com/3.2/stolen-check/{{VIN}}.{{format}}",
 													"protocol": "https",
 													"host": [
 														"api",
-														"vindecoder",
-														"eu"
+														"vincario",
+														"com"
 													],
 													"path": [
 														"3.2",
@@ -186,7 +186,7 @@
 										"method": "GET",
 										"header": [
 											{
-												"description": "Request API key at https://vindecoder.eu/api/",
+												"description": "Request API key at https://vincario.com/vin-decoder/",
 												"key": "X-API-Key",
 												"value": ""
 											},
@@ -240,7 +240,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "https://api.vindecoder.eu"
+			"value": "https://api.vincario.com"
 		},
 		{
 			"key": "VIN",

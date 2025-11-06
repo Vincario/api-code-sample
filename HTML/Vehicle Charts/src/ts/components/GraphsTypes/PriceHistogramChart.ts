@@ -2,7 +2,7 @@ import { Chart, LinearScale, LineController, PointElement, LineElement, Filler }
 import _BaseChart from "./_BaseChart";
 import {IChartConfig} from "../../interfaces/IChartConfig";
 import {IPriceHistogramChartData} from "../../interfaces/IPriceHistogramChartData";
-import i18next from "i18next";
+import { i18n } from "../../../i18n/i18n";
 
 Chart.register(LinearScale, LineController, PointElement, LineElement, Filler);
 
@@ -162,7 +162,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
                         display: true,
                         title: {
                             display: true,
-                            text: i18next.t("COUNT_OF_VEHICLES"),
+                            text: i18n.t("COUNT_OF_VEHICLES"),
                             padding: 10,
                         },
                     },
@@ -173,7 +173,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
                         },
                         title: {
                             display: true,
-                            text: i18next.t("PRICE") + ' (' + this._options.currency + ')',
+                            text: i18n.t("PRICE") + ' (' + this._options.currency + ')',
                             padding: 10,
                         },
                         max: Math.round(data.binRange[1]) + data.binRange[2]
@@ -186,7 +186,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
                     tooltip: {
                         callbacks: {
                             title: (context) => {
-                                return i18next.t("NUMBERS_OF_VEHICLE_LISTING");
+                                return i18n.t("NUMBERS_OF_VEHICLE_LISTING");
                             },
                         },
                     },
@@ -222,7 +222,7 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
     private createCartHeader(chartContainer:HTMLElement):void{
         // Create chart header element
         const chartHeader = document.createElement('p');
-        chartHeader.textContent = `${i18next.t('VEHICLE_PRICE_DISTRIBUTION')}: ${this._data.vehicle.make} ${this._data.vehicle.model} ${this._data.vehicle.model_year}`;
+        chartHeader.textContent = `${i18n.t('VEHICLE_PRICE_DISTRIBUTION')}: ${this._data.vehicle.make} ${this._data.vehicle.model} ${this._data.vehicle.model_year}`;
         chartHeader.classList.add('chartHeader');
 
         // Create chart explanatory element
@@ -230,9 +230,9 @@ export default class PriceHistogramChart extends _BaseChart<IPriceHistogramChart
         chartExplanatory.classList.add('chart-explanatory');
 
         // Create and append explanatory boxes
-        chartExplanatory.appendChild(this.createExplanatoryBox(i18next.t('BELLOW_AVERAGE'), 'chart-explanatory-box-green'));
-        chartExplanatory.appendChild(this.createExplanatoryBox(i18next.t('AVERAGE'), 'chart-explanatory-box-orange'));
-        chartExplanatory.appendChild(this.createExplanatoryBox(i18next.t('ABOVE_AVERAGE'), 'chart-explanatory-box-red'));
+        chartExplanatory.appendChild(this.createExplanatoryBox(i18n.t('BELLOW_AVERAGE'), 'chart-explanatory-box-green'));
+        chartExplanatory.appendChild(this.createExplanatoryBox(i18n.t('AVERAGE'), 'chart-explanatory-box-orange'));
+        chartExplanatory.appendChild(this.createExplanatoryBox(i18n.t('ABOVE_AVERAGE'), 'chart-explanatory-box-red'));
 
         // Prepend chart explanatory and chart header to chart container
         chartContainer.prepend(chartExplanatory);

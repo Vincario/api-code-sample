@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Sign up and request API key at https://vindecoder.eu/api/#request-free-trial-api-key
-See API documentation at https://vindecoder.eu/my/api/latest/docs
+Sign up at https://vincario.com/create-account/ and request API keys
+See API documentation at https://vincario.com/api-docs/3.2/
 """
 
 import json
@@ -15,7 +15,7 @@ vin = "WF0MXXGBWM8R43240"
 apiKey = "API_KEY"
 secretKey = "API_SECRET"
 
-apiPrefix = "https://api.vindecoder.eu/3.2"
+apiPrefix = "https://api.vincario.com/3.2"
 id = "decode"
 
 controlSum = hashlib.sha1((vin.upper()+"|"+id+"|"+apiKey+"|"+secretKey).encode('utf-8')).hexdigest()[:10]

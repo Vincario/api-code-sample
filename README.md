@@ -5,9 +5,9 @@ of you. It's here to show you the way how to do it.
 
 You will need API credentials in order to make any API calls to our API server.
 You can get the API credentials including 20 free VIN decodes after
-[requesting the free trial](https://vindecoder.eu/api/#request-free-trial-api-key).
+[requesting the free trial](https://vincario.com/vin-decoder/).
 
-Once you have the API credentials, visit our [API documentation](https://vindecoder.eu/my/api/latest/docs)
+Once you have the API credentials, visit our [API documentation](https://vincario.com/api-docs/)
 for more information.
 
 

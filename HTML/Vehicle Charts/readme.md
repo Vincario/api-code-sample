@@ -31,7 +31,7 @@ The important attribute to be filled according to your requirements is `data-rec
 
 ## Step 3: Populate the data-records
 
-The `data-records` attribute should be populated according to your needs. You need to fetch this data through our API. Look for more info at [https://vindecoder.eu/api/](https://vindecoder.eu/api/). It is a crucial attribute that dictates the data to be displayed on the charts. Please don´t forget to put there JSON representation of response of our API.
+The `data-records` attribute should be populated according to your needs. You need to fetch this data through our API. Look for more info at [https://vincario.com/api-docs/](https://vincario.com/api-docs/). It is a crucial attribute that dictates the data to be displayed on the charts. Please don´t forget to put there JSON representation of response of our API.
 
 ## Step 4: Enjoy your charts!
 

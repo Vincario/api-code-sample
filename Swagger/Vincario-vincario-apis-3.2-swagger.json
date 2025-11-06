@@ -6,7 +6,7 @@
     "version" : "3.2"
   },
   "servers" : [ {
-    "url" : "https://api.vindecoder.eu"
+    "url" : "https://api.vincario.com"
   } ],
   "paths" : {
     "/3.2/decode/{VIN}.{format}" : {
@@ -39,7 +39,7 @@
         }, {
           "name" : "X-API-Key",
           "in" : "header",
-          "description" : "Request API key at https://vindecoder.eu/api/",
+          "description" : "Request API key at https://vincario.com/vin-decoder/",
           "required" : false,
           "style" : "simple",
           "explode" : false,
@@ -63,7 +63,7 @@
         }
       },
       "servers" : [ {
-        "url" : "https://api.vindecoder.eu"
+        "url" : "https://api.vincario.com"
       } ]
     },
     "/3.2/vehicle-market-value/{VIN}.{format}" : {
@@ -96,7 +96,7 @@
         }, {
           "name" : "X-API-Key",
           "in" : "header",
-          "description" : "Request API key at https://vindecoder.eu/api/",
+          "description" : "Request API key at https://vincario.com/vin-decoder/",
           "required" : false,
           "style" : "simple",
           "explode" : false,
@@ -120,7 +120,7 @@
         }
       },
       "servers" : [ {
-        "url" : "https://api.vindecoder.eu"
+        "url" : "https://api.vincario.com"
       } ]
     },
     "/3.2/stolen-check/{VIN}.{format}" : {
@@ -152,7 +152,7 @@
           "schema" : {
             "type" : "string"
           },
-          "description" : "Request API key at https://vindecoder.eu/api/"
+          "description" : "Request API key at https://vincario.com/vin-decoder/"
         } ],
         "responses" : {
           "200" : {
@@ -203,7 +203,7 @@
                 },
                 "examples" : {
                   "0" : {
-                    "value" : "{\"vin\":\"TMBGE61Z762171194\",\"price\":0,\"price_currency\":\"CZK\",\"balance\":{\"API Decode\":18,\"API Stolen Check\":4,\"API Vehicle Market Value\":4},\"stolen\":[{\"code\":\"cz\",\"status\":\"stolen\"},{\"code\":\"hu\",\"status\":\"not-stolen\"},{\"code\":\"ro\",\"status\":\"not-stolen\"},{\"code\":\"si\",\"status\":\"not-stolen\"},{\"code\":\"vincario\",\"status\":\"not-stolen\"}]}"
+                    "value" : "{\"vin\":\"TMBGE61Z762171194\",\"price\":0,\"price_currency\":\"CZK\",\"balance\":{\"API Decode\":18,\"API Stolen Check\":4,\"API Vehicle Market Value\":4},\"stolen\":[{\"code\":\"cz\",\"status\":\"stolen\"},{\"code\":\"hu\",\"status\":\"not-stolen\"},{\"code\":\"it\",\"status\":\"not-stolen\"},{\"code\":\"ro\",\"status\":\"not-stolen\"},{\"code\":\"si\",\"status\":\"not-stolen\"},{\"code\":\"vincario\",\"status\":\"not-stolen\"}]}"
                   }
                 }
               }
@@ -211,11 +211,11 @@
           }
         },
         "servers" : [ {
-          "url" : "https://api.vindecoder.eu"
+          "url" : "https://api.vincario.com"
         } ]
       },
       "servers" : [ {
-        "url" : "https://api.vindecoder.eu"
+        "url" : "https://api.vincario.com"
       } ]
     }
   }

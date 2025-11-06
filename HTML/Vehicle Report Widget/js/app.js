@@ -11,7 +11,7 @@ function decodeAction(event) {
         return;
 
     if (errors.length === 0) {
-        window.location.href = "https://vindecoder.eu/check-vin/" + vinInput.value;
+        window.location.href = "https://vincario.com/vin/" + vinInput.value + "/";
     } else {
         showErrors(true, errors);
     }

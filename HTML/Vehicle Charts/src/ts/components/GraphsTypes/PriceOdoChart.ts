@@ -5,7 +5,7 @@ import {ITrendLine} from "../../interfaces/ITrendLine";
 import {IPoint} from "../../interfaces/IPoint";
 import {IPriceOdoChartData} from "../../interfaces/IPriceOdoChartData";
 import {IChartConfig} from "../../interfaces/IChartConfig";
-import i18next from "i18next";
+import { i18n } from "../../../i18n/i18n";
 
 /**
  * A chart that displays the relationship between vehicle price and odometer reading.
@@ -94,7 +94,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
                                 const dataset = context.dataset;
                                 const price = dataset.data[dataIndex].y;
                                 const odo = dataset.data[dataIndex].x;
-                                return (context.datasetIndex === 0 ? i18next.t('TRENDLINE')  : ''  ) + ` ${Math.round(price).toLocaleString()} ${this._options.currency} / ${odo.toLocaleString()} ${this._options.lengthUnit}`;
+                                return (context.datasetIndex === 0 ? i18n.t('TRENDLINE')  : ''  ) + ` ${Math.round(price).toLocaleString()} ${this._options.currency} / ${odo.toLocaleString()} ${this._options.lengthUnit}`;
                             }
                         }
                     },
@@ -122,7 +122,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
                         },
                         title: {
                             display: true,
-                            text: i18next.t("PRICE") + ' ' + "(" + this._options.currency + ")",
+                            text: i18n.t("PRICE") + ' ' + "(" + this._options.currency + ")",
                             padding: {top: 0, left: 0, right: 0, bottom: 10}
                         },
                     },
@@ -147,7 +147,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
                         max: data.maxOdoValue + (data.maxOdoValue - data.minOdoValue) * 0.1,
                         title: {
                             display: true,
-                            text: i18next.t("ODOMETER") + ' ' + "(" + this._options.lengthUnit + ")",
+                            text: i18n.t("ODOMETER") + ' ' + "(" + this._options.lengthUnit + ")",
                             padding: {top: 20, left: 0, right: 0, bottom: 0}
                         },
                     }
@@ -222,7 +222,7 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
     private createCartHeader(chartContainer:HTMLElement):void{
         // Create chart header element
         const chartHeader = document.createElement('p');
-        chartHeader.textContent = `${i18next.t('VEHICLE_PRICE_MAP')}: ${this._data.vehicle.make} ${this._data.vehicle.model} ${this._data.vehicle.model_year}`;
+        chartHeader.textContent = `${i18n.t('VEHICLE_PRICE_MAP')}: ${this._data.vehicle.make} ${this._data.vehicle.model} ${this._data.vehicle.model_year}`;
         chartHeader.classList.add('chartHeader');
 
         // Create chart explanatory element
@@ -233,8 +233,8 @@ export default class PriceOdoChart extends _BaseChart<IPriceOdoChartData> {
         chartExplanatory.appendChild(this.createTrendlineSign());
 
         // Create and append explanatory boxes
-        chartExplanatory.appendChild(this.createExplanatoryBox(i18next.t('BELLOW_AVERAGE'), 'chart-explanatory-box-green'));
-        chartExplanatory.appendChild(this.createExplanatoryBox(i18next.t('ABOVE_AVERAGE'), 'chart-explanatory-box-red'));
+        chartExplanatory.appendChild(this.createExplanatoryBox(i18n.t('BELLOW_AVERAGE'), 'chart-explanatory-box-green'));
+        chartExplanatory.appendChild(this.createExplanatoryBox(i18n.t('ABOVE_AVERAGE'), 'chart-explanatory-box-red'));
 
         // Prepend chart explanatory and chart header to chart container
         chartContainer.prepend(chartExplanatory);
